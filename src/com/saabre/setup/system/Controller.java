@@ -6,6 +6,7 @@
 
 package com.saabre.setup.system;
 
+import com.saabre.setup.system.generator.Profile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

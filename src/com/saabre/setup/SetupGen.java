@@ -7,6 +7,7 @@
 package com.saabre.setup;
 
 import com.saabre.setup.system.Controller;
+import com.saabre.setup.system.remote.Connection;
 
 /**
  *
@@ -28,6 +29,9 @@ public class SetupGen {
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
+        
+        Connection connection = new Connection();
+        connection.accessServer();
     }
     
 }

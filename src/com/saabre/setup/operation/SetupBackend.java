@@ -6,7 +6,7 @@
 
 package com.saabre.setup.operation;
 
-import com.saabre.setup.system.Operation;
+import com.saabre.setup.system.generator.Operation;
 import com.x5.template.Chunk;
 
 /**

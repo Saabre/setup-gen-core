@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.system;
+package com.saabre.setup.system.generator;
 
+import com.saabre.setup.system.generator.Operation;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,11 +76,11 @@ public class Profile {
 
     // -- Getters and setters --
     
-    void setPath(String path) {
+    public void setPath(String path) {
         this.path = path;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 }

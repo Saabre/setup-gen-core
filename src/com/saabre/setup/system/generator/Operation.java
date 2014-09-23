@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.system;
+package com.saabre.setup.system.generator;
 
 import com.x5.template.Chunk;
 import com.x5.template.Theme;
