@@ -1,0 +1,16 @@
+
+operations:
+# Allouer plus de Swap
+  - type: AllocateSwap
+    enabled: true
+    config: { amount: 2g }
+    
+# Installer l'API OSRM
+  - type: SetupBackend
+    enabled: true
+    config: {}  
+    
+# Installer l'interface Web OSRM
+  - type: SetupFrontend
+    enabled: true
+    config: {}

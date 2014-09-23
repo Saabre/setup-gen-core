@@ -1,0 +1,8 @@
+
+# Les profils à générer --
+profiles:
+  - default
+  
+# Les profils disponibles (ignorés) --
+available:
+  - default

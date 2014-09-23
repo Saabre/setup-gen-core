@@ -6,6 +6,8 @@
 
 package com.saabre.setup;
 
+import com.saabre.setup.system.Controller;
+
 /**
  *
  * @author Lifaen
@@ -17,6 +19,15 @@ public class SetupGen {
      */
     public static void main(String[] args) {
         
+        System.out.println(" -- Server Setup Utility --\n");
+        
+        Controller controller = new Controller();
+        
+        try {
+            controller.run();
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
     }
     
 }
