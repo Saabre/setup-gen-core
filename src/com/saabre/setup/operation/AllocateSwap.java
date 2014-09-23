@@ -7,6 +7,7 @@
 package com.saabre.setup.operation;
 
 import com.saabre.setup.system.Operation;
+import com.x5.template.Chunk;
 
 /**
  *
@@ -15,8 +16,19 @@ import com.saabre.setup.system.Operation;
 public class AllocateSwap extends Operation {
 
     @Override
-    protected void run() {
+    protected String run() 
+    {
+        Chunk html = getMainChunk();
         
+        String path = "/mnt/";
+        String fileName = path + "swap1.2g";
+
+        html.set("path", path);
+        html.set("fileName", fileName);
+        html.set("base", 1024);
+        html.set("clusterNb", 2097152);
+
+        return html.toString();
     }
     
 }

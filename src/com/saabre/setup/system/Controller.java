@@ -70,6 +70,7 @@ public class Controller {
         
         Profile profile = new Profile();
         
+        profile.setName(name);
         profile.setPath("profile." + name + ".yaml");
         profile.load(config);
         

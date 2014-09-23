@@ -6,6 +6,7 @@
 
 package com.saabre.setup.system;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class Profile {
     
     private String path;
     private List<Operation> operationList = new ArrayList<>();
+    private String name;
 
     // -- Methods --
     
@@ -50,6 +52,8 @@ public class Profile {
         
         if(config.containsKey("enabled"))
             operation.setEnabled((boolean) config.get("enabled"));
+        else
+            operation.setEnabled(true);
         
         operation.setConfig(config.get("config"));
         operation.setType((String) config.get("type"));
@@ -59,14 +63,23 @@ public class Profile {
         return operation;
     }
     
-    public void generate() {
+    public void generate() throws Exception {
+        String result = "";
         for(Operation op : operationList)
-            op.generate();
+            result += op.generate();
+        
+        PrintWriter writer = new PrintWriter("data/output/" + name + ".sh", "UTF-8");
+        writer.print(result);
+        writer.close();
     }
 
     // -- Getters and setters --
     
     void setPath(String path) {
         this.path = path;
+    }
+
+    void setName(String name) {
+        this.name = name;
     }
 }

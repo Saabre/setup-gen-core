@@ -6,6 +6,9 @@
 
 package com.saabre.setup.system;
 
+import com.x5.template.Chunk;
+import com.x5.template.Theme;
+
 /**
  *
  * @author Lifaen
@@ -17,15 +20,28 @@ abstract public class Operation {
     private boolean enabled;
     private Object config;
     
+    protected Theme chunkFactory;
+    
     // -- Methods --
 
-    public void generate() {
+    public String generate() {
         System.out.print("  - "+ type +" operation : ");
-        run();
+        
+        chunkFactory = new Theme("data/operation", type);
+        chunkFactory.setDefaultFileExtension("sh");
+        
+        String result = run();
+        
         System.out.println("OK ! ");
+        return result;
     }
     
-    protected abstract void run();
+    protected Chunk getMainChunk()
+    {
+        return chunkFactory.makeChunk(type + "#Main");
+    }
+    
+    protected abstract String run();
     
     // -- Getters and setters --
     public boolean isEnabled() {

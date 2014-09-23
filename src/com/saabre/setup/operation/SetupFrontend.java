@@ -7,6 +7,7 @@
 package com.saabre.setup.operation;
 
 import com.saabre.setup.system.Operation;
+import com.x5.template.Chunk;
 
 /**
  *
@@ -15,8 +16,10 @@ import com.saabre.setup.system.Operation;
 public class SetupFrontend extends Operation {
 
     @Override
-    protected void run() {
-        
+    protected String run() 
+    {
+        Chunk html = getMainChunk();
+
+        return html.toString();
     }
-    
 }

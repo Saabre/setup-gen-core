@@ -1,8 +1,9 @@
 
 # Les profils à générer --
 profiles:
-  - default
+  - fullSetup
   
 # Les profils disponibles (ignorés) --
 available:
   - default
+  - fullSetup
