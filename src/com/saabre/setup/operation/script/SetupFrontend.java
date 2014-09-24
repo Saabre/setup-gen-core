@@ -16,7 +16,7 @@ import com.x5.template.Chunk;
 public class SetupFrontend extends Operation {
 
     @Override
-    protected void run() 
+    public void run() 
     {
         Chunk html = getMainChunk();
 

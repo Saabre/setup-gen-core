@@ -32,7 +32,7 @@ abstract public class Operation extends TemplateBuilder {
         System.out.println("OK ! ");
     }
     
-    protected abstract void run();
+    public abstract void run();
     
     // -- Alias --
     

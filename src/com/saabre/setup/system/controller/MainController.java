@@ -6,78 +6,45 @@
 
 package com.saabre.setup.system.controller;
 
-import com.saabre.setup.helper.FileHelper;
-import com.saabre.setup.system.script.Profile;
-import java.io.InputStream;
+import com.saabre.setup.system.module.Module;
 import java.util.List;
-import java.util.Map;
-import org.yaml.snakeyaml.Yaml;
 
 /**
  *
  * @author Lifaen
  */
-public class MainController {
+public class MainController extends Controller {
     
     // -- Attributes --
         
-    private Yaml yaml = new Yaml();
+    private ConfigController config;
+    private List<Module> moduleList;
     
+    private boolean configLoaded;
+
     // -- Methods --
+    
+    public void load() throws Exception
+    {
+        // -- Load Configuration --
+        config = new ConfigController();
+        config.run();
+        
+        moduleList = config.getModuleList();
+        
+        configLoaded = true;
+    }
     
     public void run() throws Exception
     {
-        // Load base config --
-        System.out.print("Load config.yaml : ");
+        if(!configLoaded) 
+            throw new Exception("config not loaded");
         
-        List<Object> profiles = loadBaseConfig();
-        
-        System.out.println("Done, "+ profiles.size() +" profile(s) found\n");
-        
-        // Load profiles
-        for(Object obj : profiles)
+        for(Module module : moduleList)
         {
-            String name = (String) obj;
-            System.out.println("Load profile."+ name +".yaml : ");
-            
-            Profile profile = loadProfile(name);
-            
-            System.out.println("Profile loaded !\n");
-            System.out.println("Generate "+ name +" : ");
-            
-            profile.generate();
-            
-            System.out.println("Profile generated !\n");
+            module.activate();
         }
     }
     
-    private List<Object> loadBaseConfig() throws Exception
-    {
-        // Get configuration --
-        InputStream baseConfigInput = FileHelper.readConfigFile("config");
-        Map<String, Object> object = (Map<String, Object>) yaml.load(baseConfigInput);
-        
-        // Return profiles names --
-        List<Object> profiles = (List<Object>) object.get("profiles");
-        if(profiles == null)
-            throw new Exception("profiles not found");
-        
-        return profiles;
-    }
-
-    private Profile loadProfile(String name) throws Exception 
-    {
-        // Get configuration for this profile --
-        InputStream baseConfigInput = FileHelper.readConfigFile("profile." + name);
-        Map<String, Object> config = (Map<String, Object>) yaml.load(baseConfigInput);
-        
-        // Store profiles data --
-        Profile profile = new Profile();
-        
-        profile.setName(name);
-        profile.setPath("profile." + name + ".yaml");
-        profile.load(config);
-        
-        return profile;
-    }
+    
 }

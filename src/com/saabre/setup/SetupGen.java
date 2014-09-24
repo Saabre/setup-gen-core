@@ -17,17 +17,24 @@ public class SetupGen {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
+        try 
+        {
+            System.out.println(" -- Server Setup Utility --\n");
         
-        System.out.println(" -- Server Setup Utility --\n");
+            MainController controller = new MainController();
         
-        MainController controller = new MainController();
-        
-        try {
+            controller.load();
             controller.run();
-        } catch (Exception ex) {
+            
+            System.out.println("\n -- End --\n");
+        } 
+        catch (Exception ex) 
+        {
             System.err.println(ex);
         }
+        
         
     }
     

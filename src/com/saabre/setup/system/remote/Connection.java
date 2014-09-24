@@ -26,7 +26,7 @@ public class Connection {
         String remoteHost = "108.61.208.56";
         int    remotePort = 22;
         String remoteUser = "root";
-        String remotePass = "Gwaend231261SAABRE";
+        String remotePass = "kszqCx1AJ5z139qJeT";
         String remotePath = "/opt/script";
  
         Session     session     = null;

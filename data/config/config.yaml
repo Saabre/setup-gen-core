@@ -1,9 +1,10 @@
 
 # Les profils à générer --
+modules:
+  - Script
+  - Remote
+
+# Les profils à générer --
 profiles:
-  - fullSetup
-  
-# Les profils disponibles (ignorés) --
-available:
-  - default
+# - default
   - fullSetup

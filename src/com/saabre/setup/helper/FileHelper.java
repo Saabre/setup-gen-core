@@ -10,12 +10,22 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Map;
+import org.yaml.snakeyaml.Yaml;
 
 /**
  *
  * @author Lifaen
  */
 public class FileHelper {
+    
+    public static Map<String, Object> loadFile(String path) throws Exception
+    {
+        // Get configuration --
+        Yaml yaml = new Yaml();
+        InputStream input = readConfigFile(path);
+        return (Map<String, Object>) yaml.load(input);
+    }
     
     public static InputStream readConfigFile(String name) throws Exception
     {
