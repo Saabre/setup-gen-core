@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.system;
+package com.saabre.setup.system.controller;
 
 import com.saabre.setup.helper.FileHelper;
-import com.saabre.setup.system.generator.Profile;
+import com.saabre.setup.system.script.Profile;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,7 @@ import org.yaml.snakeyaml.Yaml;
  *
  * @author Lifaen
  */
-public class Controller {
+public class MainController {
     
     // -- Attributes --
         

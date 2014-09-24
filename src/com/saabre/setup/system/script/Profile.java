@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.system.generator;
+package com.saabre.setup.system.script;
 
 import java.util.ArrayList;
 import java.util.List;

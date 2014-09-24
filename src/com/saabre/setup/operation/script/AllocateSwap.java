@@ -4,22 +4,31 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.operation;
+package com.saabre.setup.operation.script;
 
-import com.saabre.setup.system.generator.Operation;
+import com.saabre.setup.system.script.Operation;
 import com.x5.template.Chunk;
 
 /**
  *
  * @author Lifaen
  */
-public class SetupFrontend extends Operation {
+public class AllocateSwap extends Operation {
 
     @Override
     protected void run() 
     {
         Chunk html = getMainChunk();
+        
+        String path = "/mnt/";
+        String fileName = path + "swap1.2g";
+
+        html.set("path", path);
+        html.set("fileName", fileName);
+        html.set("base", 1024);
+        html.set("clusterNb", 2097152);
 
         builder.append(html.toString());
     }
+    
 }

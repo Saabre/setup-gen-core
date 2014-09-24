@@ -6,8 +6,7 @@
 
 package com.saabre.setup;
 
-import com.saabre.setup.system.Controller;
-import com.saabre.setup.system.remote.Connection;
+import com.saabre.setup.system.controller.MainController;
 
 /**
  *
@@ -22,7 +21,7 @@ public class SetupGen {
         
         System.out.println(" -- Server Setup Utility --\n");
         
-        Controller controller = new Controller();
+        MainController controller = new MainController();
         
         try {
             controller.run();
@@ -30,8 +29,6 @@ public class SetupGen {
             System.err.println(ex);
         }
         
-        Connection connection = new Connection();
-        // connection.accessServer();
     }
     
 }

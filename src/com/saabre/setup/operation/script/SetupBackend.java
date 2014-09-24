@@ -4,16 +4,16 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.operation;
+package com.saabre.setup.operation.script;
 
-import com.saabre.setup.system.generator.Operation;
+import com.saabre.setup.system.script.Operation;
 import com.x5.template.Chunk;
 
 /**
  *
  * @author Lifaen
  */
-public class AllocateSwap extends Operation {
+public class SetupBackend extends Operation {
 
     @Override
     protected void run() 
