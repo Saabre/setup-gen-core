@@ -52,6 +52,21 @@ public class Connection {
             // -- Open SSH session --
             session.connect();
             
+            /* Input
+            InputStream in = new PipedInputStream();
+            PipedOutputStream pin = new PipedOutputStream((PipedInputStream) in);
+            channel.setInputStream(in);
+            channel.connect();
+            
+            pin.write(myScript.getBytes());
+
+            // Output
+            PipedInputStream pout = new PipedInputStream((PipedOutputStream) out);
+          
+            BufferedReader consoleOutput = new BufferedReader(new InputStreamReader(pout));
+            consoleOutput.readLine();
+            //*/
+            
             // -- Open SFTP channel --
             channel = session.openChannel("sftp");
             channel.connect();

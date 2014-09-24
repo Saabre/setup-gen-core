@@ -16,10 +16,10 @@ import com.x5.template.Chunk;
 public class SetupFrontend extends Operation {
 
     @Override
-    protected String run() 
+    protected void run() 
     {
         Chunk html = getMainChunk();
 
-        return html.toString();
+        builder.append(html.toString());
     }
 }

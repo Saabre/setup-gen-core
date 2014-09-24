@@ -16,7 +16,7 @@ import com.x5.template.Chunk;
 public class AllocateSwap extends Operation {
 
     @Override
-    protected String run() 
+    protected void run() 
     {
         Chunk html = getMainChunk();
         
@@ -28,7 +28,7 @@ public class AllocateSwap extends Operation {
         html.set("base", 1024);
         html.set("clusterNb", 2097152);
 
-        return html.toString();
+        builder.append(html.toString());
     }
     
 }

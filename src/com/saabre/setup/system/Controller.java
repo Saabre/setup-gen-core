@@ -6,10 +6,8 @@
 
 package com.saabre.setup.system;
 
+import com.saabre.setup.helper.FileHelper;
 import com.saabre.setup.system.generator.Profile;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -55,9 +53,11 @@ public class Controller {
     
     private List<Object> loadBaseConfig() throws Exception
     {
-        InputStream baseConfigInput = readFile("config");
+        // Get configuration --
+        InputStream baseConfigInput = FileHelper.readConfigFile("config");
         Map<String, Object> object = (Map<String, Object>) yaml.load(baseConfigInput);
         
+        // Return profiles names --
         List<Object> profiles = (List<Object>) object.get("profiles");
         if(profiles == null)
             throw new Exception("profiles not found");
@@ -65,10 +65,13 @@ public class Controller {
         return profiles;
     }
 
-    private Profile loadProfile(String name) throws Exception {
-        InputStream baseConfigInput = readFile("profile." + name);
+    private Profile loadProfile(String name) throws Exception 
+    {
+        // Get configuration for this profile --
+        InputStream baseConfigInput = FileHelper.readConfigFile("profile." + name);
         Map<String, Object> config = (Map<String, Object>) yaml.load(baseConfigInput);
         
+        // Store profiles data --
         Profile profile = new Profile();
         
         profile.setName(name);
@@ -76,21 +79,5 @@ public class Controller {
         profile.load(config);
         
         return profile;
-    }
-    
-    // -- Util Methods --
-    
-    private InputStream readFile(String name) throws Exception
-    {
-        InputStream input = null;
-        
-        // Load base config file --
-        try {
-            input = new FileInputStream(new File("data/config/"+ name +".yaml"));
-        } catch (FileNotFoundException ex) {
-            throw new Exception("file not found");
-        }
-        
-        return input;
     }
 }

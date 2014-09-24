@@ -6,8 +6,6 @@
 
 package com.saabre.setup.system.generator;
 
-import com.saabre.setup.system.generator.Operation;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,27 +49,24 @@ public class Profile {
         // -- Load the object --
         Operation operation = (Operation) aClass.newInstance();
         
+        operation.setConfig(config.get("config"));
+        operation.setType((String) config.get("type"));
+        
         if(config.containsKey("enabled"))
             operation.setEnabled((boolean) config.get("enabled"));
         else
             operation.setEnabled(true);
         
-        operation.setConfig(config.get("config"));
-        operation.setType((String) config.get("type"));
-        
         System.out.println("OK !");
-        
         return operation;
     }
     
     public void generate() throws Exception {
-        String result = "";
-        for(Operation op : operationList)
-            result += op.generate();
+        ScriptBuilder builder = new ScriptBuilder();
         
-        PrintWriter writer = new PrintWriter("data/output/" + name + ".sh", "UTF-8");
-        writer.print(result);
-        writer.close();
+        builder.setOperationList(operationList);        
+        builder.generate();
+        builder.write("data/output/" + name + ".sh");
     }
 
     // -- Getters and setters --

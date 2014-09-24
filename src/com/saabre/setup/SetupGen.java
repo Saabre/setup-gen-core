@@ -27,11 +27,11 @@ public class SetupGen {
         try {
             controller.run();
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(ex);
         }
         
         Connection connection = new Connection();
-        connection.accessServer();
+        // connection.accessServer();
     }
     
 }

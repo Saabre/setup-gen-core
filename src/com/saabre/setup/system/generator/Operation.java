@@ -6,42 +6,40 @@
 
 package com.saabre.setup.system.generator;
 
-import com.x5.template.Chunk;
-import com.x5.template.Theme;
-
 /**
  *
  * @author Lifaen
  */
-abstract public class Operation {
+abstract public class Operation extends TemplateBuilder {
     
     // -- Attributes --
     private String type;
     private boolean enabled;
     private Object config;
     
-    protected Theme chunkFactory;
+    protected StringBuilder builder;
     
     // -- Methods --
 
-    public String generate() {
+    public void generate(StringBuilder builder) {
         System.out.print("  - "+ type +" operation : ");
         
-        chunkFactory = new Theme("data/operation", type);
-        chunkFactory.setDefaultFileExtension("sh");
+        loadChunkFactory(type);
+        this.builder = builder;
         
-        String result = run();
+        run();
         
         System.out.println("OK ! ");
-        return result;
     }
     
-    protected Chunk getMainChunk()
+    protected abstract void run();
+    
+    // -- Alias --
+    
+    protected void loadChunkFactory(String name)
     {
-        return chunkFactory.makeChunk(type + "#Main");
+        loadChunkFactory(name, name);
     }
-    
-    protected abstract String run();
     
     // -- Getters and setters --
     public boolean isEnabled() {
@@ -62,6 +60,9 @@ abstract public class Operation {
 
     public void setType(String type) {
         this.type = type;
+    }    
+
+    public String getType() {
+        return type;
     }
-    
 }
