@@ -27,7 +27,7 @@ public class TemplateBuilder
     {
         this.path = path;
         this.name = name;
-        chunkFactory = new Theme("data/operation", path);
+        chunkFactory = new Theme("data/template", path);
         chunkFactory.setDefaultFileExtension("sh");
     }
 

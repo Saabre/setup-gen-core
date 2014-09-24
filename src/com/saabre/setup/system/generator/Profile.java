@@ -66,7 +66,7 @@ public class Profile {
         
         builder.setOperationList(operationList);        
         builder.generate();
-        builder.write("data/output/" + name + ".sh");
+        builder.write("data/output/script/" + name + ".sh");
     }
 
     // -- Getters and setters --

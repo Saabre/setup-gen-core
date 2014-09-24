@@ -38,7 +38,7 @@ abstract public class Operation extends TemplateBuilder {
     
     protected void loadChunkFactory(String name)
     {
-        loadChunkFactory(name, name);
+        loadChunkFactory("script", name);
     }
     
     // -- Getters and setters --
