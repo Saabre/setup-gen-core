@@ -18,6 +18,17 @@ import java.io.InputStreamReader;
  */
 public class RunCommand extends RemoteOperation {
 
+    // -- Attributes --
+    protected String command;
+
+    // -- Overrided Methods --
+    
+    @Override
+    public void loadConfig() throws Exception 
+    {
+        command = config.toString();
+    }
+    
     @Override
     public void printBefore() {
         super.printBefore();
@@ -34,7 +45,7 @@ public class RunCommand extends RemoteOperation {
         ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
         InputStream in = channelExec.getInputStream();
         
-        channelExec.setCommand(config.toString());
+        channelExec.setCommand(command);
         channelExec.connect();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -58,6 +69,5 @@ public class RunCommand extends RemoteOperation {
         else{
             output.data.println("Done!");
         }
-    }
-    
+    }    
 }

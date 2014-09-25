@@ -22,6 +22,20 @@ import java.util.Map;
  */
 public class SendFile extends RemoteOperation {
     
+    // -- Attributes --
+    
+    protected String target;
+    protected List<String> sources;
+    
+    // -- Overrided Methods --
+    
+    @Override
+    public void loadConfig() throws Exception {
+        Map<String, Object> config = (Map<String, Object>) this.config;
+        target = (String) config.get("target");
+        sources = (List<String>) config.get("source");
+    }
+    
     @Override
     public void printBefore() {
         super.printBefore();
@@ -34,12 +48,6 @@ public class SendFile extends RemoteOperation {
     @Override
     public void run() throws Exception 
     {
-        // Configuration --
-        
-        Map<String, Object> config = (Map<String, Object>) this.config;
-        String target = (String) config.get("target");
-        List<String> sources = (List<String>) config.get("source");
-        
         // Send files --
         RemoteFileSender sender = new RemoteFileSender();
         

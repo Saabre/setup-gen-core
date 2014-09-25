@@ -20,15 +20,16 @@ public class ClassHelper {
         // -- Load the class --
         ClassLoader classLoader = ClassHelper.class.getClassLoader();
         Class aClass;
+        Object obj;
         
         try {
             aClass = classLoader.loadClass(className);
+            obj = aClass.newInstance();
         } catch (ClassNotFoundException e) {
             throw new Exception("class "+ className + " not found");
         }
         
-        // -- Load the object --
-        return aClass.newInstance();
+        return obj;
     }
     
 }

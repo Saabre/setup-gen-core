@@ -41,13 +41,14 @@ public abstract class Operation {
     
     public void activate() throws Exception
     {      
+        loadConfig();
         printBefore();
         run();
         printAfter();
     }
 
     public abstract void run() throws Exception;
-    
+    public abstract void loadConfig() throws Exception;
     // -- Getters and setters --
     public boolean isEnabled() {
         return enabled;

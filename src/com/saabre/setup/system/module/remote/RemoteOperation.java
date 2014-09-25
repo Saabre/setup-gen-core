@@ -21,7 +21,6 @@ public abstract class RemoteOperation extends Operation {
     
     // -- Methods --
 
-
     public void setSession(Session session) {
         this.session = session;
     }

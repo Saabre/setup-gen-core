@@ -16,6 +16,12 @@ import com.x5.template.Chunk;
 public class SetupBackend extends ScriptOperation {
 
     @Override
+    public void loadConfig() throws Exception 
+    { 
+    
+    }
+    
+    @Override
     public void run() 
     {
         Chunk html = getChunk("Main");

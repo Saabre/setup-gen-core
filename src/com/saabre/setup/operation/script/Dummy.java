@@ -16,6 +16,9 @@ import com.x5.template.Chunk;
 public class Dummy extends ScriptOperation {
 
     @Override
+    public void loadConfig() throws Exception { } // Nothing to load --
+    
+    @Override
     public void run() throws Exception
     {
         Chunk html = getChunk("Main");
