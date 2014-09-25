@@ -2,7 +2,7 @@
 script:
 # Allouer plus de Swap
   - type: AllocateSwap
-    config: { amount: 2g }
+    config: { amount: 2Gio }
     
 # Installer l'API OSRM
   - type: SetupBackend

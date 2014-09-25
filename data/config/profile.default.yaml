@@ -1,9 +1,9 @@
 
-operations:
+script:
 # Allouer plus de Swap
   - type: AllocateSwap
     enabled: true
-    config: { amount: 2g }
+    config: { amount: 2Go }
     
 # Installer l'API OSRM
   - type: SetupBackend

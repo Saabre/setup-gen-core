@@ -6,8 +6,11 @@
 
 package com.saabre.setup.operation.script;
 
+import com.saabre.setup.helper.FileHelper;
+import com.saabre.setup.helper.NameHelper;
 import com.saabre.setup.system.module.script.ScriptOperation;
 import com.x5.template.Chunk;
+import java.util.Map;
 
 /**
  *
@@ -15,8 +18,19 @@ import com.x5.template.Chunk;
  */
 public class AllocateSwap extends ScriptOperation {
 
+    // -- Attributes --
+    private String amount;
+    private long byteCount;
+            
+    // -- Overrided Methods --
+            
     @Override
-    public void loadConfig() throws Exception { } // Nothing to load --
+    public void loadConfig() throws Exception 
+    {
+        Map<String, Object> config = (Map<String, Object>) this.config;
+        amount = (String) config.get("amount");
+        byteCount = FileHelper.readableToByteCount(amount);
+    }
     
     @Override
     public void run() throws Exception
@@ -24,12 +38,12 @@ public class AllocateSwap extends ScriptOperation {
         Chunk html = getChunk("Main");
         
         String path = "/mnt/";
-        String fileName = path + "swap1.2g";
+        String fileName = path + "swap."+ NameHelper.getFileDate() +"."+ amount.replaceAll(" ", "");
 
         html.set("path", path);
         html.set("fileName", fileName);
         html.set("base", 1024);
-        html.set("clusterNb", 2097152);
+        html.set("clusterNb", (long) byteCount / 1024);
 
         builder.append(html.toString());
     }    

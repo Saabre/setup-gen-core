@@ -3,14 +3,14 @@
 # -- Operation AllocateSwap --
 
     # Allocation de la mémoire --
-    sudo dd if=/dev/zero of=/mnt/swap1.2g bs=1024 count=2097152
-    sudo chmod 600 /mnt/swap1.2g
+    sudo dd if=/dev/zero of=/mnt/swap.2014-09-25.16-50-18.2Gio bs=1024 count=2097152
+    sudo chmod 600 /mnt/swap.2014-09-25.16-50-18.2Gio
 
     # Formatage --
-    sudo mkswap /mnt/swap1.2g
+    sudo mkswap /mnt/swap.2014-09-25.16-50-18.2Gio
 
     # Utilisation --
-    sudo swapon /mnt/swap1.2g
+    sudo swapon /mnt/swap.2014-09-25.16-50-18.2Gio
 
     # Verification --
     cat /proc/meminfo
