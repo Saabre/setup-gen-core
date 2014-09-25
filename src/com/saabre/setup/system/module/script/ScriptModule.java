@@ -35,9 +35,9 @@ public class ScriptModule extends Module {
         // Operation list --
         for(ScriptOperation operation : profile.getScriptOperationList())
         {
-            print("  - "+ operation.getType() +" operation: "); 
+            print(" > "+ operation.getType() +": "); 
             builder.generateOperation(operation);
-            System.out.println("OK ! ");
+            println("OK !");
         }
         
         // Footer and Writing --

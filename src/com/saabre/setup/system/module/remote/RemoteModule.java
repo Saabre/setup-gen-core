@@ -81,12 +81,10 @@ public class RemoteModule extends Module
         
         for(RemoteOperation operation : operationList)
         {
-            print("  - "+ operation.getType() +" operation: ");
+            println(" > "+ operation.getType() +": ");
             
             operation.setSession(session);
             operation.activate();
-        
-            println("OK !");
         }
         
         println("End of "+ profile.getName() +" !\n");

@@ -15,3 +15,6 @@ remote:
       source:
         - data/output/script/fullSetup.sh
       target: /opt/script
+  
+  - type: RunCommand
+    config: "apt-get moo"

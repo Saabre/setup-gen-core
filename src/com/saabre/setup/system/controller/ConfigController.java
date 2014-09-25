@@ -98,7 +98,7 @@ public class ConfigController extends Controller {
     
     private Operation loadOperation(Map<String, Object> config, String type) throws Exception    
     {
-        print("  - "+ config.get("type") +" operation: ");
+        print(" > "+ config.get("type") +": ");
         
         // Load the object --
         String folder = "com.saabre.setup.operation." + type;
