@@ -16,30 +16,16 @@ public class Controller {
     
     // -- Attributes --
     
+    protected ControllerOutput output = new ControllerOutput();
+    
+    // -- Output --
+    
+    public static class ControllerOutput extends Output
+    {
+        public Channel op = new Info();
+        public Channel subOp = new Operation();
+        public Channel title = new Title();
+    }
     
     // -- Profile methods --
-    
-    
-    // -- Print Methods --
-    
-    protected void print(Object obj)
-    {
-        System.out.print(obj);
-    }
-    
-    protected void println(Object obj)
-    {
-        System.out.println(obj);
-    }
-    
-    protected void printError(Object obj)
-    {
-        System.err.print(obj);
-    }
-    
-    protected void printlnError(Object obj)
-    {
-        System.err.println(obj);
-    }
-    
 }

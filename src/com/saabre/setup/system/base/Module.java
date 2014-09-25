@@ -28,7 +28,7 @@ public abstract class Module extends Controller {
     
     public void activate() throws Exception
     {
-        println("/* -- "+ NameHelper.upper(name) +" process -- */\n");
+        output.title.println(NameHelper.upper(name) +" process");
         
         preRun();
         

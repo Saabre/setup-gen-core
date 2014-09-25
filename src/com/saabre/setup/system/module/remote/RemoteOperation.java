@@ -21,9 +21,6 @@ public abstract class RemoteOperation extends Operation {
     
     // -- Methods --
 
-    public void activate() throws Exception{        
-        run();
-    }
 
     public void setSession(Session session) {
         this.session = session;

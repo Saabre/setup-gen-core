@@ -16,10 +16,35 @@ public abstract class Operation {
     protected String type;
     protected boolean enabled;
     protected Object config;
+    protected OperationOutput output;
+    
+    // -- Output --
+    
+    public static class OperationOutput extends Output
+    {
+        public Channel data = new Data();
+        public Channel op = new Operation();
+    }
     
     // -- Methods --
     
-    public abstract void activate() throws Exception;
+    public void printBefore()
+    {
+        output.op.print(type+": ");
+    }
+    
+    public void printAfter()
+    {
+        output.op.append("OK !\n");
+    }
+    
+    public void activate() throws Exception
+    {      
+        printBefore();
+        run();
+        printAfter();
+    }
+
     public abstract void run() throws Exception;
     
     // -- Getters and setters --
@@ -46,4 +71,9 @@ public abstract class Operation {
     public String getType() {
         return type;
     }
+
+    public void setOutput(OperationOutput output) {
+        this.output = output;
+    }
+
 }

@@ -36,7 +36,7 @@ public class ConfigController extends Controller {
     public void run() throws Exception
     {        
         // Load base config --
-        print("Load config.yaml: ");
+        output.op.print("Load config.yaml: ");
         
         Map<String, Object> object = FileHelper.loadFile("config");
         
@@ -48,28 +48,28 @@ public class ConfigController extends Controller {
         if(modules == null)
             throw new Exception("modules not found");
         
-        println("Done, "+ profiles.size() +" profile(s) "
+        output.op.append("Done, "+ profiles.size() +" profile(s) "
                 + "and "+ modules.size() +" module(s) found.\n");
         
         // Load profiles --
         for(Object obj : profiles)
         {
             String name = (String) obj;
-            println("Load profile."+ name +".yaml: ");
+            output.op.println("Load profile."+ name +".yaml: ");
             profileList.add(loadProfile(name));
-            println("Profile loaded !\n");
+            output.op.println("Profile loaded !\n");
         }
         
         // Load modules --
         for(Object obj : modules)
         {
             String name = (String) obj;
-            print("Load module "+ name +": ");
+            output.op.print("Load module "+ name +": ");
             moduleList.add(loadModule(name));
-            println("OK !");
+            output.op.println("OK !");
         }
         
-        println("");
+        output.op.println("");
     }
     
     private Profile loadProfile(String name) throws Exception 
@@ -98,7 +98,7 @@ public class ConfigController extends Controller {
     
     private Operation loadOperation(Map<String, Object> config, String type) throws Exception    
     {
-        print(" > "+ config.get("type") +": ");
+        output.subOp.print(config.get("type") +": ");
         
         // Load the object --
         String folder = "com.saabre.setup.operation." + type;
@@ -114,7 +114,7 @@ public class ConfigController extends Controller {
         else
             operation.setEnabled(true);
         
-        println("OK !");
+        output.subOp.append("OK !\n");
         return operation;
     }
     
@@ -132,7 +132,7 @@ public class ConfigController extends Controller {
         }
         catch(FileNotFoundException e)
         {
-            print(name + ".yaml not found, but ");
+            output.op.append(name + ".yaml not found, but ");
         }
         
         return module;

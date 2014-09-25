@@ -11,6 +11,9 @@ import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.saabre.setup.system.base.Module;
+import com.saabre.setup.system.base.Operation;
+import com.saabre.setup.system.base.Operation.OperationOutput;
+import com.saabre.setup.system.base.Output;
 import com.saabre.setup.system.module.remote.RemoteOperation;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +55,7 @@ public class RemoteModule extends Module
         pass = (String) remote.get("pass");
         path = (String) remote.get("path");
         
-        println("Trying to connect to " + host + ":" + port + "..."); 
+        output.op.println("Trying to connect to " + host + ":" + port + "..."); 
         
         // -- Initialisation --
         JSch jsch = new JSch();
@@ -68,32 +71,31 @@ public class RemoteModule extends Module
 
         // -- Open SSH session --
         session.connect();
-        println("Connected.\n"); 
+        output.op.println("Connected.\n"); 
         
     }
     
     @Override
     public void run() throws Exception
     {
-        println("Process "+ profile.getName() +":");
+        output.op.println("Process "+ profile.getName() +":");
         
         List<RemoteOperation> operationList = profile.getRemoteOperationList();
         
         for(RemoteOperation operation : operationList)
-        {
-            println(" > "+ operation.getType() +": ");
-            
+        {            
+            operation.setOutput(new Operation.OperationOutput());
             operation.setSession(session);
             operation.activate();
         }
         
-        println("End of "+ profile.getName() +" !\n");
+        output.op.println("End of "+ profile.getName() +" !\n");
     }
 
     @Override
     public void postRun() throws Exception 
     {
         session.disconnect();
-        println("Disconnected.");
+        output.op.println("Disconnected.");
     }
 }

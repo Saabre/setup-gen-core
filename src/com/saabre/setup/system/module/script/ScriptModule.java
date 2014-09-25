@@ -7,6 +7,8 @@
 package com.saabre.setup.system.module.script;
 
 import com.saabre.setup.system.base.Module;
+import com.saabre.setup.system.base.Operation;
+import com.saabre.setup.system.base.Output;
 import com.saabre.setup.system.module.script.ScriptBuilder;
 
 /**
@@ -26,7 +28,7 @@ public class ScriptModule extends Module {
     @Override
     public void run() throws Exception
     {
-        println("Generate "+ profile.getName() +": ");
+        output.op.println("Generate "+ profile.getName() +": ");
             
         // Prepare and Header --
         ScriptBuilder builder = new ScriptBuilder();
@@ -35,16 +37,15 @@ public class ScriptModule extends Module {
         // Operation list --
         for(ScriptOperation operation : profile.getScriptOperationList())
         {
-            print(" > "+ operation.getType() +": "); 
+            operation.setOutput(new Operation.OperationOutput());
             builder.generateOperation(operation);
-            println("OK !");
         }
         
         // Footer and Writing --
         builder.generateFooter();
         builder.write("data/output/script/" + profile.getName() + ".sh");
 
-        println("Profile generated !\n");
+        output.op.println("Profile generated !\n");
     }
 
     @Override

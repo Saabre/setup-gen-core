@@ -19,6 +19,15 @@ import java.io.InputStreamReader;
 public class RunCommand extends RemoteOperation {
 
     @Override
+    public void printBefore() {
+        super.printBefore();
+        output.op.append(config.toString() + "\n");
+    }
+    
+    @Override
+    public void printAfter() { }
+
+    @Override
     public void run() throws Exception 
     {
         // Initialisation --
@@ -34,20 +43,20 @@ public class RunCommand extends RemoteOperation {
 
         while ((line = reader.readLine()) != null)
         {
-            System.out.println(" $ " + line);
+            output.data.println(line);
         }
 
         int exitStatus = channelExec.getExitStatus();
         channelExec.disconnect();
         session.disconnect();
         if(exitStatus < 0){
-            System.out.println(" $ Done, but exit status not set!");
+            output.data.println("Done, but exit status not set!");
         }
         else if(exitStatus > 0){
-            System.out.println(" $ Done, but with error!");
+            output.data.println("Done, but with error!");
         }
         else{
-            System.out.println(" $ Done!");
+            output.data.println("Done!");
         }
     }
     
