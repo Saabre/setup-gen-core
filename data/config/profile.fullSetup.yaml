@@ -13,8 +13,9 @@ remote:
   - type: SendFile
     config:
       source:
-        - data/output/script/fullSetup.sh
+        - data/output/script/Dummy.sh
       target: /opt/script
   
-  - type: RunCommand
-    config: "apt-get moo"
+  - {type: RunCommand, config: "chmod +x /opt/script/Dummy.sh"}
+  
+  - {type: RunCommand, config: "/opt/script/Dummy.sh"}

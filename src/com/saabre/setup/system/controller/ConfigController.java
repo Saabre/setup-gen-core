@@ -85,11 +85,13 @@ public class ConfigController extends Controller {
         List<Object> scripts = (List<Object>) config.get("script");
         List<Object> remotes = (List<Object>) config.get("remote");
         
-        for(Object line : scripts)
-            profile.addScript((ScriptOperation) loadOperation((Map<String, Object>) line, "script"));
+        if(scripts != null)
+            for(Object line : scripts)
+                profile.addScript((ScriptOperation) loadOperation((Map<String, Object>) line, "script"));
         
-        for(Object line : remotes)
-            profile.addRemote((RemoteOperation) loadOperation((Map<String, Object>) line, "remote"));
+        if(remotes != null)
+            for(Object line : remotes)
+                profile.addRemote((RemoteOperation) loadOperation((Map<String, Object>) line, "remote"));
         
         return profile;
     }

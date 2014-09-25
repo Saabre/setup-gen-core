@@ -48,7 +48,7 @@ public class RunCommand extends RemoteOperation {
 
         int exitStatus = channelExec.getExitStatus();
         channelExec.disconnect();
-        session.disconnect();
+        
         if(exitStatus < 0){
             output.data.println("Done, but exit status not set!");
         }
