@@ -35,4 +35,15 @@ public class FileHelper {
         
         return input;
     }
+    
+    /* From http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java */
+    public static String convertToReadableSize(long size, boolean si)
+    {
+        int unit = si ? 1000 : 1024;
+        if (size < unit) return size + " o";
+        
+        int     exp = (int) (Math.log(size) / Math.log(unit));
+        String  pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
+        return String.format("%.1f %so", size / Math.pow(unit, exp), pre);
+    }
 }
