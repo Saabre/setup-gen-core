@@ -45,7 +45,7 @@ public class ScriptModule extends Module {
         builder.generateFooter();
         builder.write("data/output/script/" + profile.getName() + ".sh");
 
-        output.op.println("Profile generated !");
+        output.op.println("Profile generated !\n");
     }
 
     @Override

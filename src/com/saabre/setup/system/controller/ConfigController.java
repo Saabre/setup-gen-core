@@ -49,7 +49,7 @@ public class ConfigController extends Controller {
             throw new Exception("modules not found");
         
         output.op.append("Done, "+ profiles.size() +" profile(s) "
-                + "and "+ modules.size() +" module(s) found.\n");
+                + "and "+ modules.size() +" module(s) found.\n\n");
         
         // Load profiles --
         for(Object obj : profiles)
@@ -68,6 +68,8 @@ public class ConfigController extends Controller {
             moduleList.add(loadModule(name));
             output.op.println("OK !");
         }
+        
+        output.op.println("");
     }
     
     private Profile loadProfile(String name) throws Exception 

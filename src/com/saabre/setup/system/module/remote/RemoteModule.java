@@ -96,6 +96,6 @@ public class RemoteModule extends Module
     public void postRun() throws Exception 
     {
         session.disconnect();
-        output.op.println("Disconnected.");
+        output.op.println("Disconnected.\n");
     }
 }

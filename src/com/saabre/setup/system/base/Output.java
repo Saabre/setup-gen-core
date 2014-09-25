@@ -58,7 +58,6 @@ public class Output {
         @Override
         public void println(String str)  
         { 
-            super.println("");
             super.print(ANSI_RED + "/* -- "+ str +" -- */\n\n");  
         }
     }
