@@ -4,42 +4,23 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.system.script;
+package com.saabre.setup.system.base;
 
 /**
  *
  * @author Lifaen
  */
-abstract public class Operation extends TemplateBuilder {
+public abstract class Operation {
     
     // -- Attributes --
-    private String type;
-    private boolean enabled;
-    private Object config;
-    
-    protected StringBuilder builder;
+    protected String type;
+    protected boolean enabled;
+    protected Object config;
     
     // -- Methods --
-
-    public void generate(StringBuilder builder) {
-        System.out.print("  - "+ type +" operation : ");
-        
-        loadChunkFactory(type);
-        this.builder = builder;
-        
-        run();
-        
-        System.out.println("OK ! ");
-    }
     
-    public abstract void run();
-    
-    // -- Alias --
-    
-    protected void loadChunkFactory(String name)
-    {
-        loadChunkFactory("script", name);
-    }
+    public abstract void activate() throws Exception;
+    public abstract void run() throws Exception;
     
     // -- Getters and setters --
     public boolean isEnabled() {

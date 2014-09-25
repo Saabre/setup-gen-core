@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.system.script;
+package com.saabre.setup.system.module.script;
 
+import com.saabre.setup.helper.TemplateHelper;
 import com.x5.template.Chunk;
 import java.io.PrintWriter;
 import java.util.List;
@@ -14,28 +15,25 @@ import java.util.List;
  *
  * @author Lifaen
  */
-public class ScriptBuilder extends TemplateBuilder
+public class ScriptBuilder
 {
     // -- Attributes --
     
     private String result = "";
-    private List<Operation> operations;
+    private List<ScriptOperation> operations;
     private boolean generated = false;
             
     // -- Management Methods --
     
-    public void generate()
+    public void generate() throws Exception
     {
         if(generated) return; // Already generated --
-        
-        // Initialisation --
-        loadChunkFactory("system", "BuildScript");
         
         // Build the script --
         StringBuilder builder = new StringBuilder();
         builder.append(generateScriptHeader());
         
-        for(Operation operation : operations)
+        for(ScriptOperation operation : operations)
             generateOperation(builder, operation);
         
         builder.append(generateScriptFooter());
@@ -45,10 +43,11 @@ public class ScriptBuilder extends TemplateBuilder
         generated = true;
     }
     
-    private void generateOperation(StringBuilder builder, Operation operation) {
+    private void generateOperation(StringBuilder builder, ScriptOperation operation) throws Exception {
         builder.append(generateOperationHeader(operation));
         
-        operation.generate(builder);
+        operation.setBuilder(builder);
+        operation.activate();
         
         builder.append(generateOperationFooter(operation));
     }
@@ -63,7 +62,7 @@ public class ScriptBuilder extends TemplateBuilder
     // -- Generation Methods --
 
     private String generateScriptHeader() {
-        Chunk chunk = getMainChunk();
+        Chunk chunk = getChunk("Header");
         return chunk.toString();
     }
     
@@ -72,7 +71,7 @@ public class ScriptBuilder extends TemplateBuilder
         return chunk.toString();
     }
     
-    private String generateOperationHeader(Operation operation) {
+    private String generateOperationHeader(ScriptOperation operation) {
         Chunk chunk = getChunk("OperationHeader");
         
         chunk.set("name", operation.getType());
@@ -80,7 +79,7 @@ public class ScriptBuilder extends TemplateBuilder
         return chunk.toString();
     }
     
-    private String generateOperationFooter(Operation operation) {
+    private String generateOperationFooter(ScriptOperation operation) {
         Chunk chunk = getChunk("OperationFooter");
         
         chunk.set("name", operation.getType());
@@ -90,8 +89,12 @@ public class ScriptBuilder extends TemplateBuilder
     
     // -- Getters and setters --
     
-    public void setOperationList(List<Operation> operations) 
+    public void setOperationList(List<ScriptOperation> operations) 
     {
         this.operations = operations;
     }    
+
+    private Chunk getChunk(String name) {
+        return TemplateHelper.getSystemChunk("BuildScript", name);
+    }
 }

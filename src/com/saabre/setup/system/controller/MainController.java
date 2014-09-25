@@ -6,7 +6,8 @@
 
 package com.saabre.setup.system.controller;
 
-import com.saabre.setup.system.module.Module;
+import com.saabre.setup.system.base.Controller;
+import com.saabre.setup.system.base.Module;
 import java.util.List;
 
 /**

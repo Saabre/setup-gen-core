@@ -6,10 +6,10 @@
 
 package com.saabre.setup.system.script;
 
-import com.saabre.setup.helper.ClassHelper;
+import com.saabre.setup.system.module.remote.RemoteOperation;
+import com.saabre.setup.system.module.script.ScriptOperation;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -20,13 +20,18 @@ public class Profile {
     // -- Attributes --
     
     private String path;
-    private final List<Operation> operationList = new ArrayList<>();
+    private final List<ScriptOperation> scriptOperationList = new ArrayList<>();
+    private final List<RemoteOperation> remoteOperationList = new ArrayList<>();
     private String name;
 
     // -- Methods --
     
-    public void add(Operation operation) {
-        operationList.add(operation);
+    public void addScript(ScriptOperation operation) {
+        scriptOperationList.add(operation);
+    }
+
+    public void addRemote(RemoteOperation operation) {
+        remoteOperationList.add(operation);
     }
 
     // -- Getters and setters --
@@ -47,8 +52,12 @@ public class Profile {
         return name;
     }
 
-    public List<Operation> getOperationList() {
-        return operationList;
+    public List<ScriptOperation> getScriptOperationList() {
+        return scriptOperationList;
+    }
+    
+    public List<RemoteOperation> getRemoteOperationList() {
+        return remoteOperationList;
     }
     
     

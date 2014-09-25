@@ -6,10 +6,8 @@
 
 package com.saabre.setup.system.module;
 
-import com.saabre.setup.system.controller.Controller;
-import com.saabre.setup.system.script.Profile;
-import com.saabre.setup.system.script.ScriptBuilder;
-import java.util.List;
+import com.saabre.setup.system.base.Module;
+import com.saabre.setup.system.module.script.ScriptBuilder;
 
 /**
  *
@@ -32,7 +30,7 @@ public class ScriptModule extends Module {
             
         ScriptBuilder builder = new ScriptBuilder();
 
-        builder.setOperationList(profile.getOperationList());        
+        builder.setOperationList(profile.getScriptOperationList());        
         builder.generate();
         builder.write("data/output/script/" + profile.getName() + ".sh");
 

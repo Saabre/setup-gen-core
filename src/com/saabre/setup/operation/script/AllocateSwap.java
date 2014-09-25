@@ -6,19 +6,19 @@
 
 package com.saabre.setup.operation.script;
 
-import com.saabre.setup.system.script.Operation;
+import com.saabre.setup.system.module.script.ScriptOperation;
 import com.x5.template.Chunk;
 
 /**
  *
  * @author Lifaen
  */
-public class AllocateSwap extends Operation {
+public class AllocateSwap extends ScriptOperation {
 
     @Override
-    public void run() 
+    public void run() throws Exception
     {
-        Chunk html = getMainChunk();
+        Chunk html = getChunk("Main");
         
         String path = "/mnt/";
         String fileName = path + "swap1.2g";

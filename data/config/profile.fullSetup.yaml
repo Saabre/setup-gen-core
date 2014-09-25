@@ -1,9 +1,17 @@
 
-operations:
+script:
 # Allouer plus de Swap
   - type: AllocateSwap
     config: { amount: 2g }
     
 # Installer l'API OSRM
   - type: SetupBackend
-    config: {}  
+    config: {}
+    
+remote:
+# Envoyer le fichier
+  - type: SendFile
+    config:
+      source:
+        - data/output/script/fullSetup.sh
+      target: /opt/script

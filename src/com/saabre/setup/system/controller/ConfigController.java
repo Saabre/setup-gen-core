@@ -8,9 +8,14 @@ package com.saabre.setup.system.controller;
 
 import com.saabre.setup.helper.ClassHelper;
 import com.saabre.setup.helper.FileHelper;
-import com.saabre.setup.system.module.Module;
-import com.saabre.setup.system.script.Operation;
+import com.saabre.setup.helper.NameHelper;
+import com.saabre.setup.system.base.Controller;
+import com.saabre.setup.system.base.Module;
+import com.saabre.setup.system.base.Operation;
 import com.saabre.setup.system.script.Profile;
+import com.saabre.setup.system.module.remote.RemoteOperation;
+import com.saabre.setup.system.module.script.ScriptOperation;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +48,8 @@ public class ConfigController extends Controller {
         if(modules == null)
             throw new Exception("modules not found");
         
-        println("Done, "+ profiles.size() +" profile(s) and "+ modules.size() +" found\n");
+        println("Done, "+ profiles.size() +" profile(s) "
+                + "and "+ modules.size() +" module(s) found.\n");
         
         // Load profiles --
         for(Object obj : profiles)
@@ -78,20 +84,24 @@ public class ConfigController extends Controller {
         profile.setPath("profile." + name + ".yaml");
         
         // Parse operations --
-        List<Object> operations = (List<Object>) config.get("operations");
+        List<Object> scripts = (List<Object>) config.get("script");
+        List<Object> remotes = (List<Object>) config.get("remote");
         
-        for(Object line : operations)
-            profile.add(loadOperation((Map<String, Object>) line));
+        for(Object line : scripts)
+            profile.addScript((ScriptOperation) loadOperation((Map<String, Object>) line, "script"));
+        
+        for(Object line : remotes)
+            profile.addRemote((RemoteOperation) loadOperation((Map<String, Object>) line, "remote"));
         
         return profile;
     }
     
-    private Operation loadOperation(Map<String, Object> config) throws Exception    
+    private Operation loadOperation(Map<String, Object> config, String type) throws Exception    
     {
         System.out.print("  - "+ config.get("type") +" operation : ");
         
         // Load the object --
-        String folder = "com.saabre.setup.operation.script";
+        String folder = "com.saabre.setup.operation." + type;
         String className = folder + "." + config.get("type");
         Operation operation = (Operation) ClassHelper.newInstance(className);
         
@@ -111,11 +121,19 @@ public class ConfigController extends Controller {
     private Module loadModule(String name) throws Exception {
         // Load the object --
         String folder = "com.saabre.setup.system.module";
-        String className = folder + "." + name + "Module";
+        String className = folder + "." + NameHelper.upper(name) + "Module";
         Module module = (Module) ClassHelper.newInstance(className);
         
         module.setName(name);
         module.setProfileList(profileList);
+        
+        try {
+            module.setConfig(FileHelper.loadFile(name));
+        }
+        catch(FileNotFoundException e)
+        {
+            print(name + ".yaml not found, but ");
+        }
         
         return module;
     }

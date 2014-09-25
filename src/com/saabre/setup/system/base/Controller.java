@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.system.controller;
+package com.saabre.setup.system.base;
 
-import com.saabre.setup.system.script.Profile;
 import java.util.List;
 
 /**
@@ -34,6 +33,11 @@ public class Controller {
     }
     
     protected void printError(Object obj)
+    {
+        System.err.print(obj);
+    }
+    
+    protected void printlnError(Object obj)
     {
         System.err.println(obj);
     }

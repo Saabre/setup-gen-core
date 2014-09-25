@@ -1,9 +1,0 @@
-
-# Serveur à contacter --
-remote:
-    host: 108.61.208.56
-    port: 22
-    user: root
-    pass: kszqCx1AJ5z139qJeT
-    path: /opt/script
-    

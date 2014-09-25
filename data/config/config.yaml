@@ -1,8 +1,8 @@
 
 # Les profils à générer --
 modules:
-  - Script
-  - Remote
+  - script
+  - remote
 
 # Les profils à générer --
 profiles:

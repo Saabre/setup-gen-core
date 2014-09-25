@@ -21,18 +21,19 @@ public class SetupGen {
     {
         try 
         {
-            System.out.println(" -- Server Setup Utility --\n");
+            System.out.println("/* ------ Server Setup Utility ------ */\n");
         
             MainController controller = new MainController();
         
             controller.load();
             controller.run();
             
-            System.out.println("\n -- End --\n");
+            System.out.println("\n/* ------ End ------ */\n");
         } 
         catch (Exception ex) 
         {
             System.err.println(ex);
+            ex.printStackTrace();
         }
         
         

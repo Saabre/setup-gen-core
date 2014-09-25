@@ -8,7 +8,6 @@ package com.saabre.setup.helper;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
@@ -32,11 +31,7 @@ public class FileHelper {
         InputStream input = null;
         
         // Load base config file --
-        try {
-            input = new FileInputStream(new File("data/config/"+ name +".yaml"));
-        } catch (FileNotFoundException ex) {
-            throw new Exception("file not found");
-        }
+        input = new FileInputStream(new File("data/config/"+ name +".yaml"));
         
         return input;
     }

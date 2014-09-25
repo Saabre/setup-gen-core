@@ -4,11 +4,10 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.system.module;
+package com.saabre.setup.system.base;
 
-import com.saabre.setup.system.controller.Controller;
 import com.saabre.setup.system.script.Profile;
-import java.util.LinkedList;
+import com.saabre.setup.helper.NameHelper;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +20,7 @@ public abstract class Module extends Controller {
     // -- Attributes --
     
     private List<Profile> profileList;
-    private Map<String, Object> config;
+    protected Map<String, Object> config;
     
     protected String name;
     protected Profile profile;
@@ -30,7 +29,7 @@ public abstract class Module extends Controller {
     
     public void activate() throws Exception
     {
-        println(" -- "+ name +" process --\n");
+        println("/* -- "+ NameHelper.upper(name) +" process -- */\n");
         
         preRun();
         
