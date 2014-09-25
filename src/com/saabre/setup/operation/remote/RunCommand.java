@@ -7,6 +7,7 @@
 package com.saabre.setup.operation.remote;
 
 import com.jcraft.jsch.ChannelExec;
+import com.saabre.setup.system.module.remote.RemoteCommandLauncher;
 import com.saabre.setup.system.module.remote.RemoteOperation;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -41,33 +42,30 @@ public class RunCommand extends RemoteOperation {
     @Override
     public void run() throws Exception 
     {
-        // Initialisation --
-        ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
-        InputStream in = channelExec.getInputStream();
+        RemoteCommandLauncher launcher = new RemoteCommandLauncher();
         
-        channelExec.setCommand(command);
-        channelExec.connect();
+        launcher.addListener(new RemoteCommandLauncher.Listener() {
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        String line;
-        int index = 0;
+            @Override
+            public void onNewLine(String str) 
+            {
+                output.data.println(str);
+            }
 
-        while ((line = reader.readLine()) != null)
-        {
-            output.data.println(line);
-        }
-
-        int exitStatus = channelExec.getExitStatus();
-        channelExec.disconnect();
+            @Override
+            public void onExit(int exitStatus) 
+            {
+                if(exitStatus < 0)
+                    output.data.println("Done, but exit status not set!");
+                else if(exitStatus > 0)
+                    output.data.println("Done, but with error!");
+                else
+                    output.data.println("Done!");
+            }
+        });
         
-        if(exitStatus < 0){
-            output.data.println("Done, but exit status not set!");
-        }
-        else if(exitStatus > 0){
-            output.data.println("Done, but with error!");
-        }
-        else{
-            output.data.println("Done!");
-        }
+        launcher.connect(session);
+        launcher.run(command);
+        launcher.waitForOutput();
     }    
 }
