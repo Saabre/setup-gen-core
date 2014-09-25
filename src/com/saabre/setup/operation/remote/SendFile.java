@@ -9,6 +9,7 @@ package com.saabre.setup.operation.remote;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.SftpException;
+import com.saabre.setup.system.module.remote.RemoteFileSender;
 import com.saabre.setup.system.module.remote.RemoteOperation;
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,30 +21,44 @@ import java.util.Map;
  * @author Lifaen
  */
 public class SendFile extends RemoteOperation {
-
+    
+    @Override
+    public void printBefore() {
+        super.printBefore();
+        output.op.append("\n");
+    }
+    
+    @Override
+    public void printAfter() { }
+    
     @Override
     public void run() throws Exception 
     {
-         // -- Open SFTP channel --
-        Channel channel = session.openChannel("sftp");
-        channel.connect();
-        ChannelSftp channelSftp = (ChannelSftp) channel;
+        // Configuration --
         
         Map<String, Object> config = (Map<String, Object>) this.config;
         String target = (String) config.get("target");
         List<String> sources = (List<String>) config.get("source");
+        
+        // Send files --
+        RemoteFileSender sender = new RemoteFileSender();
+        
+        sender.addListener(new RemoteFileSender.Listener() {
 
-        // -- Open Folder --
-        channelSftp.cd(target);
+            @Override
+            public void onFileSent(File file) {
+                output.data.println(file.getName() +" sent");
+            }
+        });
+        sender.connect(session);
+        sender.cd(target);
         
         for(String source : sources)
         {
-            // -- Send file --
-            File f = new File(source);
-            channelSftp.put(new FileInputStream(f), f.getName());
+            sender.send(new File(source));
         }
         
-        channel.disconnect();
+        sender.disconnect();
     }
     
 }
