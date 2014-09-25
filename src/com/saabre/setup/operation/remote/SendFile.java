@@ -6,14 +6,10 @@
 
 package com.saabre.setup.operation.remote;
 
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.SftpException;
 import com.saabre.setup.helper.FileHelper;
 import com.saabre.setup.system.module.remote.RemoteFileSender;
 import com.saabre.setup.system.module.remote.RemoteOperation;
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +53,7 @@ public class SendFile extends RemoteOperation {
             @Override
             public void onFileSent(File file)
             {
-                String size = FileHelper.convertToReadableSize(file.length(), true);
+                String size = FileHelper.byteCountToReadable(file.length(), true);
                 output.data.println(file.getName() +" sent (" + size +")");
             }
         });

@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.yaml.snakeyaml.Yaml;
 
 /**
@@ -37,7 +39,7 @@ public class FileHelper {
     }
     
     /* From http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java */
-    public static String convertToReadableSize(long size, boolean si)
+    public static String byteCountToReadable(long size, boolean si)
     {
         int unit = si ? 1000 : 1024;
         if (size < unit) return size + " o";
@@ -45,5 +47,28 @@ public class FileHelper {
         int     exp = (int) (Math.log(size) / Math.log(unit));
         String  pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
         return String.format("%.1f %so", size / Math.pow(unit, exp), pre);
+    }
+    
+    public static long readableToByteCount(String size)
+    {
+        size = size.replaceAll(" ", "");
+        size = size.replaceAll(",", ".");
+        
+        Pattern pattern = Pattern.compile("([0-9]+\\.?[0-9]*)([KMGTPE])?(i)?[oO]");
+        Matcher matcher = pattern.matcher(size);
+        
+        if(matcher.find())
+        {            
+            boolean si = matcher.group(3) == null;
+            int unit = si ? 1000 : 1024;
+            int exp = ("KMGTPE").indexOf(matcher.group(2)) + 1;
+            double nb = Double.parseDouble(matcher.group(1));
+            double unitSize = Math.pow(unit, exp);
+            double result = (long) (nb * unitSize);
+            
+            return (long) result;
+        }
+        
+        return 0;
     }
 }
