@@ -20,30 +20,28 @@ public class ScriptBuilder
     // -- Attributes --
     
     private String result = "";
-    private List<ScriptOperation> operations;
+    private StringBuilder builder;
     private boolean generated = false;
+    
+    // -- Constructors --
+    
+    public ScriptBuilder()
+    {
+        builder = new StringBuilder();
+    }
             
     // -- Management Methods --
     
-    public void generate() throws Exception
-    {
-        if(generated) return; // Already generated --
-        
-        // Build the script --
-        StringBuilder builder = new StringBuilder();
+    void generateHeader() 
+    {    
         builder.append(generateScriptHeader());
-        
-        for(ScriptOperation operation : operations)
-            generateOperation(builder, operation);
-        
+    }
+
+    void generateFooter() {
         builder.append(generateScriptFooter());
-        
-        // Rendering --
-        result = builder.toString();
-        generated = true;
     }
     
-    private void generateOperation(StringBuilder builder, ScriptOperation operation) throws Exception {
+    void generateOperation(ScriptOperation operation) throws Exception {
         builder.append(generateOperationHeader(operation));
         
         operation.setBuilder(builder);
@@ -54,6 +52,12 @@ public class ScriptBuilder
     
     public void write(String path) throws Exception
     {    
+        if(!generated)
+        {
+            result = builder.toString();
+            generated = true;
+        }
+        
         PrintWriter writer = new PrintWriter(path, "UTF-8");
         writer.print(result);
         writer.close();
@@ -88,11 +92,6 @@ public class ScriptBuilder
     }
     
     // -- Getters and setters --
-    
-    public void setOperationList(List<ScriptOperation> operations) 
-    {
-        this.operations = operations;
-    }    
 
     private Chunk getChunk(String name) {
         return TemplateHelper.getSystemChunk("BuildScript", name);

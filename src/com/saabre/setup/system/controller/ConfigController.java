@@ -36,7 +36,7 @@ public class ConfigController extends Controller {
     public void run() throws Exception
     {        
         // Load base config --
-        print("Load config.yaml : ");
+        print("Load config.yaml: ");
         
         Map<String, Object> object = FileHelper.loadFile("config");
         
@@ -55,7 +55,7 @@ public class ConfigController extends Controller {
         for(Object obj : profiles)
         {
             String name = (String) obj;
-            println("Load profile."+ name +".yaml : ");
+            println("Load profile."+ name +".yaml: ");
             profileList.add(loadProfile(name));
             println("Profile loaded !\n");
         }
@@ -64,7 +64,7 @@ public class ConfigController extends Controller {
         for(Object obj : modules)
         {
             String name = (String) obj;
-            print("Load module "+ name +" : ");
+            print("Load module "+ name +": ");
             moduleList.add(loadModule(name));
             println("OK !");
         }
@@ -98,7 +98,7 @@ public class ConfigController extends Controller {
     
     private Operation loadOperation(Map<String, Object> config, String type) throws Exception    
     {
-        System.out.print("  - "+ config.get("type") +" operation : ");
+        print("  - "+ config.get("type") +" operation: ");
         
         // Load the object --
         String folder = "com.saabre.setup.operation." + type;
@@ -114,7 +114,7 @@ public class ConfigController extends Controller {
         else
             operation.setEnabled(true);
         
-        System.out.println("OK !");
+        println("OK !");
         return operation;
     }
     

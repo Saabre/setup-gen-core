@@ -22,10 +22,8 @@ abstract public class ScriptOperation extends Operation {
     
     // -- Methods --
 
-    public void activate() throws Exception {
-        System.out.print("  - "+ type +" operation : ");        
-        run();        
-        System.out.println("OK ! ");
+    public void activate() throws Exception {       
+        run();
     }
     
     // -- Alias --

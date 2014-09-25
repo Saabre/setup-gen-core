@@ -41,7 +41,7 @@ public class RemoteModule extends Module
     {
         // Check if config is not null --
         if(config == null)
-            throw new Exception("Error : no remote config found");
+            throw new Exception("no remote config found");
         
         // Load the configuration --
         Map<String, Object> remote = (Map<String, Object>) config.get("remote");
@@ -75,20 +75,27 @@ public class RemoteModule extends Module
     @Override
     public void run() throws Exception
     {
+        println("Process "+ profile.getName() +":");
+        
         List<RemoteOperation> operationList = profile.getRemoteOperationList();
         
         for(RemoteOperation operation : operationList)
         {
+            print("  - "+ operation.getType() +" operation: ");
+            
             operation.setSession(session);
             operation.activate();
-            
+        
+            println("OK !");
         }
+        
+        println("End of "+ profile.getName() +" !\n");
     }
 
     @Override
     public void postRun() throws Exception 
     {
         session.disconnect();
-        println("\nDisconnected.");
+        println("Disconnected.");
     }
 }

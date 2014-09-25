@@ -26,12 +26,22 @@ public class ScriptModule extends Module {
     @Override
     public void run() throws Exception
     {
-        println("Generate "+ profile.getName() +" : ");
+        println("Generate "+ profile.getName() +": ");
             
+        // Prepare and Header --
         ScriptBuilder builder = new ScriptBuilder();
-
-        builder.setOperationList(profile.getScriptOperationList());        
-        builder.generate();
+        builder.generateHeader();
+        
+        // Operation list --
+        for(ScriptOperation operation : profile.getScriptOperationList())
+        {
+            print("  - "+ operation.getType() +" operation: "); 
+            builder.generateOperation(operation);
+            System.out.println("OK ! ");
+        }
+        
+        // Footer and Writing --
+        builder.generateFooter();
         builder.write("data/output/script/" + profile.getName() + ".sh");
 
         println("Profile generated !\n");

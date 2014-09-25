@@ -21,12 +21,8 @@ public abstract class RemoteOperation extends Operation {
     
     // -- Methods --
 
-    public void activate() throws Exception{
-        System.out.println("Run "+ type +" operation :");
-        
+    public void activate() throws Exception{        
         run();
-        
-        System.out.println("OK ! ");
     }
 
     public void setSession(Session session) {
