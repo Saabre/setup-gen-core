@@ -20,12 +20,6 @@ abstract public class ScriptOperation extends Operation {
     
     protected StringBuilder builder;
     
-    // -- Methods --
-
-    public void activate() throws Exception {       
-        run();
-    }
-    
     // -- Alias --
     
     protected Chunk getChunk(String name)

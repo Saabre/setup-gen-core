@@ -6,6 +6,7 @@
 
 package com.saabre.setup;
 
+import com.saabre.setup.system.base.Controller;
 import com.saabre.setup.system.controller.MainController;
 
 /**
@@ -19,20 +20,22 @@ public class SetupGen {
      */
     public static void main(String[] args) 
     {
+        Controller.ControllerOutput output = new Controller.ControllerOutput();
+            
         try 
         {
-            System.out.println("/* ------ Server Setup Utility ------ */\n");
+            output.title.println("  [ Server Setup Utility ]  ");
         
             MainController controller = new MainController();
         
             controller.load();
             controller.run();
             
-            System.out.println("\n/* ------ End ------ */\n");
+            output.title.println("  [ End ]  ");
         } 
         catch (Exception ex) 
         {
-            System.err.println(ex);
+            output.error.println(ex.toString());
             ex.printStackTrace();
         }
         

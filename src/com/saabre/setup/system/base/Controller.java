@@ -25,6 +25,7 @@ public class Controller {
         public Channel op = new Info();
         public Channel subOp = new Operation();
         public Channel title = new Title();
+        public Channel error = new Error();
     }
     
     // -- Profile methods --

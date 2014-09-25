@@ -68,8 +68,6 @@ public class ConfigController extends Controller {
             moduleList.add(loadModule(name));
             output.op.println("OK !");
         }
-        
-        output.op.println("");
     }
     
     private Profile loadProfile(String name) throws Exception 

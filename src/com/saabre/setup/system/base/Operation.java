@@ -24,6 +24,7 @@ public abstract class Operation {
     {
         public Channel data = new Data();
         public Channel op = new Operation();
+        public Channel error = new Error();
     }
     
     // -- Methods --
