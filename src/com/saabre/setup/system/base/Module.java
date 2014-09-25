@@ -6,7 +6,6 @@
 
 package com.saabre.setup.system.base;
 
-import com.saabre.setup.system.script.Profile;
 import com.saabre.setup.helper.NameHelper;
 import java.util.List;
 import java.util.Map;

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.system.script;
+package com.saabre.setup.system.base;
 
 import com.saabre.setup.system.module.remote.RemoteOperation;
 import com.saabre.setup.system.module.script.ScriptOperation;

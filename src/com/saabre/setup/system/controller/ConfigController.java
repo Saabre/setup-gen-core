@@ -12,7 +12,7 @@ import com.saabre.setup.helper.NameHelper;
 import com.saabre.setup.system.base.Controller;
 import com.saabre.setup.system.base.Module;
 import com.saabre.setup.system.base.Operation;
-import com.saabre.setup.system.script.Profile;
+import com.saabre.setup.system.base.Profile;
 import com.saabre.setup.system.module.remote.RemoteOperation;
 import com.saabre.setup.system.module.script.ScriptOperation;
 import java.io.FileNotFoundException;
@@ -120,7 +120,7 @@ public class ConfigController extends Controller {
     
     private Module loadModule(String name) throws Exception {
         // Load the object --
-        String folder = "com.saabre.setup.system.module";
+        String folder = "com.saabre.setup.system.module." + name;
         String className = folder + "." + NameHelper.upper(name) + "Module";
         Module module = (Module) ClassHelper.newInstance(className);
         
