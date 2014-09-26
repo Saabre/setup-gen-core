@@ -1,12 +1,12 @@
 
 # Les profils à générer --
 modules:
-# - script
-# - remote
+  - script
+  - remote
   - analysis
 
 # Les profils à générer --
 profiles:
 # - default
-# - fullSetup
+  - fullSetup
   - dummy
