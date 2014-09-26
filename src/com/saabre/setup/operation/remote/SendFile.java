@@ -25,6 +25,11 @@ public class SendFile extends RemoteOperation {
     protected List<String> sources;
     
     // -- Overrided Methods --
+      
+    @Override
+    public String getTitle() throws Exception {
+        return "";
+    }
     
     @Override
     public void loadConfig() throws Exception {
@@ -32,15 +37,6 @@ public class SendFile extends RemoteOperation {
         target = (String) config.get("target");
         sources = (List<String>) config.get("source");
     }
-    
-    @Override
-    public void printBefore() {
-        super.printBefore();
-        output.op.append("\n");
-    }
-    
-    @Override
-    public void printAfter() { }
     
     @Override
     public void run() throws Exception 
@@ -51,10 +47,8 @@ public class SendFile extends RemoteOperation {
         sender.addListener(new RemoteFileSender.Listener() {
 
             @Override
-            public void onFileSent(File file)
-            {
-                String size = FileHelper.byteCountToReadable(file.length(), true);
-                output.data.println(file.getName() +" sent (" + size +")");
+            public void onFileSent(File file) {
+                if(listener != null) listener.onFileSent(file);
             }
         });
         sender.connect(session);
@@ -62,10 +56,23 @@ public class SendFile extends RemoteOperation {
         
         for(String source : sources)
         {
+            if(source.matches("data://.*"))
+                source = source.replaceFirst("^data://", FileHelper.getRootFolder());
+                
             sender.send(new File(source));
         }
         
         sender.disconnect();
+    }
+    
+    // -- Listener --
+    
+    private Listener listener;
+    public void setListener(Listener l) { this.listener = l; }
+    
+    public static interface Listener 
+    {   
+        public void onFileSent(File file);
     }
     
 }

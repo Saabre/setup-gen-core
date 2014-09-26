@@ -36,7 +36,7 @@ public class ConfigController extends Controller {
     public void run() throws Exception
     {        
         // Load base config --
-        output.op.print("Load config.yaml: ");
+        if(listener != null) listener.onRootConfigStart();
         
         Map<String, Object> object = FileHelper.loadFile("config");
         
@@ -48,28 +48,31 @@ public class ConfigController extends Controller {
         if(modules == null)
             throw new Exception("modules not found");
         
-        output.op.append("Done, "+ profiles.size() +" profile(s) "
-                + "and "+ modules.size() +" module(s) found.\n\n");
+        if(listener != null) listener.onRootConfigEnd(profiles.size(), modules.size());
         
         // Load profiles --
         for(Object obj : profiles)
         {
             String name = (String) obj;
-            output.op.println("Load profile."+ name +".yaml: ");
-            profileList.add(loadProfile(name));
-            output.op.println("Profile loaded !\n");
+            if(listener != null) listener.onProfileConfigStart(name);
+            
+            Profile profile = loadProfile(name);
+            profileList.add(profile);
+            
+            if(listener != null) listener.onProfileConfigEnd(profile);
         }
         
         // Load modules --
         for(Object obj : modules)
         {
             String name = (String) obj;
-            output.op.print("Load module "+ name +": ");
-            moduleList.add(loadModule(name));
-            output.op.println("OK !");
+            if(listener != null) listener.onModuleConfigStart(name);
+            
+            Module module = loadModule(name);
+            moduleList.add(module);
+            
+            if(listener != null) listener.onModuleConfigEnd(module);
         }
-        
-        output.op.println("");
     }
     
     private Profile loadProfile(String name) throws Exception 
@@ -98,25 +101,26 @@ public class ConfigController extends Controller {
         return profile;
     }
     
-    private Operation loadOperation(Map<String, Object> config, String type) throws Exception    
+    private Operation loadOperation(Map<String, Object> config, String operationType) throws Exception    
     {
-        output.subOp.print(config.get("type") +": ");
+        String type = (String) config.get("type");
+        if(listener != null) listener.onOperationConfigStart(type);
         
         // Load the object --
-        String folder = "com.saabre.setup.operation." + type;
+        String folder = "com.saabre.setup.operation." + operationType;
         String className = folder + "." + config.get("type");
         Operation operation = (Operation) ClassHelper.newInstance(className);
         
         // Store operation data --
         operation.setConfig(config.get("config"));
-        operation.setType((String) config.get("type"));
+        operation.setType(type);
         
         if(config.containsKey("enabled"))
             operation.setEnabled((boolean) config.get("enabled"));
         else
             operation.setEnabled(true);
         
-        output.subOp.append("OK !\n");
+        if(listener != null) listener.onOperationConfigEnd(operation);
         return operation;
     }
     
@@ -134,7 +138,6 @@ public class ConfigController extends Controller {
         }
         catch(FileNotFoundException e)
         {
-            output.op.append(name + ".yaml not found, but ");
         }
         
         return module;
@@ -149,5 +152,25 @@ public class ConfigController extends Controller {
     public List<Module> getModuleList() {
         return moduleList;
     }
+    
+    // -- Listener --
+    private Listener listener;
+    public void setListener(Listener l) { this.listener = l; }
+    
+    public static interface Listener 
+    {
+        public void onRootConfigStart();
+        public void onRootConfigEnd(int profileCount, int moduleCount);
+        
+        public void onProfileConfigStart(String name);
+        public void onProfileConfigEnd(Profile profile);
+        
+        public void onModuleConfigStart(String name); 
+        public void onModuleConfigMissingFile(String path); 
+        public void onModuleConfigEnd(Module module);
+        
+        public void onOperationConfigStart(String type);  
+        public void onOperationConfigEnd(Operation operation);
 
+    }
 }

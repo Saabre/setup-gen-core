@@ -6,27 +6,13 @@
 
 package com.saabre.setup.system.base;
 
-import java.util.List;
-
 /**
  *
  * @author Lifaen
  */
 public class Controller {
     
-    // -- Attributes --
-    
-    protected ControllerOutput output = new ControllerOutput();
-    
-    // -- Output --
-    
-    public static class ControllerOutput extends Output
-    {
-        public Channel op = new Info();
-        public Channel subOp = new Operation();
-        public Channel title = new Title();
-        public Channel error = new Error();
-    }
+    // -- Attributes --    
     
     // -- Profile methods --
 }

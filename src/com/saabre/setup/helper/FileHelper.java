@@ -20,6 +20,21 @@ import org.yaml.snakeyaml.Yaml;
  */
 public class FileHelper {
     
+    private static String rootFolder = "data/";
+    
+    // -- Getters and setters --
+    
+    public static void setRootFolder(String path)
+    {
+        rootFolder = path;
+    }
+    
+    public static String getRootFolder() { return rootFolder; }
+    public static String getScriptOutputFolder() { return rootFolder + "output/script/"; }
+    public static String getTemplateFolder() { return rootFolder + "template/"; }
+    
+    // -- Methods --
+    
     public static Map<String, Object> loadFile(String path) throws Exception
     {
         // Get configuration --
@@ -33,7 +48,7 @@ public class FileHelper {
         InputStream input = null;
         
         // Load base config file --
-        input = new FileInputStream(new File("data/config/"+ name +".yaml"));
+        input = new FileInputStream(new File(rootFolder +"config/"+ name +".yaml"));
         
         return input;
     }

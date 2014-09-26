@@ -28,8 +28,6 @@ public abstract class Module extends Controller {
     
     public void activate() throws Exception
     {
-        output.title.println(NameHelper.upper(name) +" process");
-        
         preRun();
         
         for(Profile current : profileList)

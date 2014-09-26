@@ -29,8 +29,9 @@ public class MainController extends Controller {
     {
         // -- Load Configuration --
         config = new ConfigController();
-        config.run();
+        if(listener != null) listener.onConfigLoading(config);
         
+        config.run();
         moduleList = config.getModuleList();
         
         configLoaded = true;
@@ -43,9 +44,23 @@ public class MainController extends Controller {
         
         for(Module module : moduleList)
         {
+            if(listener != null) listener.onModuleStart(module);
             module.activate();
+            if(listener != null) listener.onModuleEnd();
         }
     }
     
+    // -- Listener --
+    
+    private Listener listener;
+    public void setListener(Listener l) { this.listener = l; }
+    
+    public static interface Listener 
+    {
+        void onConfigLoading(ConfigController controller);  
+        
+        void onModuleStart(Module module);
+        void onModuleEnd();
+    }
     
 }

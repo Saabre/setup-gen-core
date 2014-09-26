@@ -27,7 +27,7 @@ public class TemplateHelper {
     
     public static Chunk getChunk(String path, String file, String name)
     {
-        Theme chunkFactory = new Theme("data/template", path);
+        Theme chunkFactory = new Theme(FileHelper.getTemplateFolder(), path);
         chunkFactory.setDefaultFileExtension("sh");
         
         return chunkFactory.makeChunk(file + "#"+ name);

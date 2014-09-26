@@ -12,9 +12,7 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.saabre.setup.system.base.Module;
 import com.saabre.setup.system.base.Operation;
-import com.saabre.setup.system.base.Operation.OperationOutput;
-import com.saabre.setup.system.base.Output;
-import com.saabre.setup.system.module.remote.RemoteOperation;
+import com.saabre.setup.system.base.Profile;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -55,7 +53,7 @@ public class RemoteModule extends Module
         pass = (String) remote.get("pass");
         path = (String) remote.get("path");
         
-        output.op.println("Trying to connect to " + host + ":" + port + "..."); 
+        if(listener != null) listener.onTryingConnection();
         
         // -- Initialisation --
         JSch jsch = new JSch();
@@ -64,38 +62,90 @@ public class RemoteModule extends Module
 
         // -- Configuration --
         Properties config = new java.util.Properties();
-
         config.put("StrictHostKeyChecking", "no");
-
         session.setConfig(config);
 
         // -- Open SSH session --
         session.connect();
-        output.op.println("Connected.\n"); 
+        if(listener != null) listener.onConnected();
         
     }
     
     @Override
     public void run() throws Exception
-    {
-        output.op.println("Process "+ profile.getName() +":");
-        
+    {        
+        if(listener != null) listener.onProfileStart(profile);
         List<RemoteOperation> operationList = profile.getRemoteOperationList();
         
         for(RemoteOperation operation : operationList)
         {            
-            operation.setOutput(new Operation.OperationOutput());
+            if(listener != null) listener.onOperationStart(operation);
             operation.setSession(session);
             operation.activate();
+            
+            if(listener != null) listener.onOperationEnd();
         }
         
-        output.op.println("End of "+ profile.getName() +" !\n");
+        if(listener != null) listener.onProfileEnd();
     }
 
     @Override
     public void postRun() throws Exception 
     {
         session.disconnect();
-        output.op.println("Disconnected.\n");
+        if(listener != null) listener.onDisconnected();
+    }
+    
+    // -- Getters and setters --
+
+    public String getHost() {
+        return host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public ChannelSftp getChannelSftp() {
+        return channelSftp;
+    }
+    
+    // -- Listener --
+    
+    private Listener listener;
+    public void setListener(Listener l) { this.listener = l; }
+    
+    public static interface Listener 
+    {
+        public void onTryingConnection();
+        public void onConnected();
+        public void onDisconnected();
+        
+        public void onProfileStart(Profile profile);
+        public void onProfileEnd();
+
+        public void onOperationStart(RemoteOperation operation);
+        public void onOperationEnd();
+
     }
 }

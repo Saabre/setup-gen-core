@@ -20,7 +20,7 @@ public class ScriptBuilder
     // -- Attributes --
     
     private String result = "";
-    private StringBuilder builder;
+    private final StringBuilder builder;
     private boolean generated = false;
     
     // -- Constructors --

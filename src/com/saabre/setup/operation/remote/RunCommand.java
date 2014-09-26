@@ -6,12 +6,8 @@
 
 package com.saabre.setup.operation.remote;
 
-import com.jcraft.jsch.ChannelExec;
 import com.saabre.setup.system.module.remote.RemoteCommandLauncher;
 import com.saabre.setup.system.module.remote.RemoteOperation;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  *
@@ -25,20 +21,16 @@ public class RunCommand extends RemoteOperation {
     // -- Overrided Methods --
     
     @Override
+    public String getTitle() throws Exception {
+        return config.toString();
+    }
+
+    @Override
     public void loadConfig() throws Exception 
     {
         command = config.toString();
     }
     
-    @Override
-    public void printBefore() {
-        super.printBefore();
-        output.op.append(config.toString() + "\n");
-    }
-    
-    @Override
-    public void printAfter() { }
-
     @Override
     public void run() throws Exception 
     {
@@ -47,25 +39,29 @@ public class RunCommand extends RemoteOperation {
         launcher.addListener(new RemoteCommandLauncher.Listener() {
 
             @Override
-            public void onNewLine(String str) 
-            {
-                output.data.println(str);
+            public void onNewLine(String str) {
+                if(listener != null) listener.onOutputNewLine(str);
             }
 
             @Override
-            public void onExit(int exitStatus) 
-            {
-                if(exitStatus < 0)
-                    output.data.println("Done, but exit status not set!");
-                else if(exitStatus > 0)
-                    output.data.println("Done, but with error!");
-                else
-                    output.data.println("Done!");
+            public void onExit(int exitStatus) {
+                if(listener != null) listener.onExit(exitStatus);
             }
         });
         
         launcher.connect(session);
         launcher.run(command);
         launcher.waitForOutput();
-    }    
+    }
+    
+    // -- Listener --
+    
+    private Listener listener;
+    public void setListener(Listener l) { this.listener = l; }
+
+    public static interface Listener 
+    {   
+        public void onOutputNewLine(String line);
+        public void onExit(int exitStatus);
+    }
 }

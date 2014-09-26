@@ -13,7 +13,7 @@ remote:
   - type: SendFile
     config:
       source:
-        - data/output/script/Dummy.sh
+        - data://output/script/Dummy.sh
       target: /opt/script
   
   - {type: RunCommand, config: "chmod +x /opt/script/Dummy.sh"}

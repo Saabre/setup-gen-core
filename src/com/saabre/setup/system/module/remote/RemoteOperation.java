@@ -20,9 +20,10 @@ public abstract class RemoteOperation extends Operation {
     protected Session session;
     
     // -- Methods --
+    
+    public abstract String getTitle() throws Exception;
 
     public void setSession(Session session) {
         this.session = session;
-    }
-    
+    }    
 }
