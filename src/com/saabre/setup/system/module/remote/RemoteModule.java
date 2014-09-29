@@ -11,7 +11,6 @@ import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.saabre.setup.system.base.Module;
-import com.saabre.setup.system.base.Operation;
 import com.saabre.setup.system.base.Profile;
 import java.util.List;
 import java.util.Map;

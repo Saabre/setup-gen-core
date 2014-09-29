@@ -63,4 +63,9 @@ public class MainController extends Controller {
         void onModuleEnd();
     }
     
+    // -- Getters and Setters --
+
+    public List<Module> getModuleList() {
+        return moduleList;
+    }    
 }

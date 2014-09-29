@@ -44,6 +44,10 @@ public abstract class Module extends Controller {
     protected abstract void postRun() throws Exception;
     
     // -- Getters and setters --
+
+    public List<Profile> getProfileList() {
+        return profileList;
+    }
     
     public void setProfileList(List<Profile> profileList) {
         this.profileList = profileList;
