@@ -6,8 +6,9 @@
 
 package com.saabre.setup.system.module.analysis;
 
+import com.saabre.setup.operation.analysis.BuildReport;
 import com.saabre.setup.system.base.Module;
-import org.rosuda.JRI.Rengine;
+import com.saabre.setup.system.base.Profile;
 
 /**
  *
@@ -24,13 +25,36 @@ public class AnalysisModule extends Module {
     @Override
     protected void run() throws Exception 
     {
-        
+        if(listener != null) listener.onProfileStart(profile);
+            
+        // Operation list --
+        for(AnalysisOperation operation : profile.getAnalysisOperationList())
+        {
+            operation.activate();
+            
+            if(operation instanceof BuildReport) listener.onReportBuilt(operation);
+        }
+
+        if(listener != null) listener.onProfileEnd();
     }
 
     @Override
     protected void postRun() throws Exception 
     {
         
+    }
+    
+    // -- Listener --
+    
+    private Listener listener;
+    public void setListener(Listener l) { this.listener = l; }
+    
+    public static interface Listener 
+    {        
+        public void onProfileStart(Profile profile);
+        public void onProfileEnd();
+        
+        public void onReportBuilt(AnalysisOperation operation);
     }
     
 }

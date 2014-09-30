@@ -28,6 +28,6 @@ public class NameHelper {
     public static String getFileDate()
     {
         Calendar calendar = Calendar.getInstance();
-        return new SimpleDateFormat("yyyy-MM-dd.HH-mm-ss").format(calendar.getTime());
+        return new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(calendar.getTime());
     }
 }

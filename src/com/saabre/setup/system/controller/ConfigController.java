@@ -13,6 +13,7 @@ import com.saabre.setup.system.base.Controller;
 import com.saabre.setup.system.base.Module;
 import com.saabre.setup.system.base.Operation;
 import com.saabre.setup.system.base.Profile;
+import com.saabre.setup.system.module.analysis.AnalysisOperation;
 import com.saabre.setup.system.module.remote.RemoteOperation;
 import com.saabre.setup.system.module.script.ScriptOperation;
 import java.io.FileNotFoundException;
@@ -89,6 +90,7 @@ public class ConfigController extends Controller {
         // Parse operations --
         List<Object> scripts = (List<Object>) config.get("script");
         List<Object> remotes = (List<Object>) config.get("remote");
+        List<Object> analysis = (List<Object>) config.get("analysis");
         
         if(scripts != null)
             for(Object line : scripts)
@@ -97,6 +99,10 @@ public class ConfigController extends Controller {
         if(remotes != null)
             for(Object line : remotes)
                 profile.addRemote((RemoteOperation) loadOperation((Map<String, Object>) line, "remote"));
+        
+        if(analysis != null)
+            for(Object line : analysis)
+                profile.addAnalysis((AnalysisOperation) loadOperation((Map<String, Object>) line, "analysis"));
         
         return profile;
     }

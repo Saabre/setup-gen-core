@@ -6,6 +6,7 @@
 
 package com.saabre.setup.system.module.script;
 
+import com.saabre.setup.helper.FileHelper;
 import com.saabre.setup.helper.TemplateHelper;
 import com.x5.template.Chunk;
 import java.io.PrintWriter;
@@ -58,9 +59,7 @@ public class ScriptBuilder
             generated = true;
         }
         
-        PrintWriter writer = new PrintWriter(path, "UTF-8");
-        writer.print(result);
-        writer.close();
+        FileHelper.write(path, result);
     }
     
     // -- Generation Methods --

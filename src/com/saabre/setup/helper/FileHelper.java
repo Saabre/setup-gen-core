@@ -9,6 +9,7 @@ package com.saabre.setup.helper;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,17 +22,41 @@ import org.yaml.snakeyaml.Yaml;
 public class FileHelper {
     
     private static String rootFolder = "data/";
+    private static String absoluteRootFolder = "data/";
+    private static String analysisOutputFolder = "output/log/";
+    private static String currentAnalysisFolder = null;
     
     // -- Getters and setters --
     
-    public static void setRootFolder(String path)
-    {
-        rootFolder = path;
-    }
+    public static void setRootFolder(String path) { rootFolder = path; }
+    public static void setAbsoluteRootFolder(String path) { absoluteRootFolder = path; }
     
     public static String getRootFolder() { return rootFolder; }
     public static String getScriptOutputFolder() { return rootFolder + "output/script/"; }
     public static String getTemplateFolder() { return rootFolder + "template/"; }
+    
+    public static String getAnalyisOutputFolder() 
+    {
+        loadAnalysisOutputFolder();
+        return rootFolder + analysisOutputFolder + currentAnalysisFolder ; 
+    }
+    
+    public static String getAbsoluteAnalyisOutputFolder() 
+    {
+        loadAnalysisOutputFolder();
+        return absoluteRootFolder + analysisOutputFolder + currentAnalysisFolder ; 
+    }
+    
+    public static void loadAnalysisOutputFolder()
+    {
+        if(currentAnalysisFolder == null)
+        {
+            String name = NameHelper.getFileDate();
+            File folder = new File(rootFolder + analysisOutputFolder + name);
+            folder.mkdir();
+            currentAnalysisFolder = name + "/";
+        }
+    }
     
     // -- Methods --
     
@@ -51,6 +76,13 @@ public class FileHelper {
         input = new FileInputStream(new File(rootFolder +"config/"+ name +".yaml"));
         
         return input;
+    }
+    
+    public static void write(String path, String str) throws Exception 
+    {
+        PrintWriter writer = new PrintWriter(path, "UTF-8");
+        writer.print(str);
+        writer.close();
     }
     
     /* From http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java */

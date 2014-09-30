@@ -6,6 +6,7 @@
 
 package com.saabre.setup.system.base;
 
+import com.saabre.setup.system.module.analysis.AnalysisOperation;
 import com.saabre.setup.system.module.remote.RemoteOperation;
 import com.saabre.setup.system.module.script.ScriptOperation;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Profile {
     private String path;
     private final List<ScriptOperation> scriptOperationList = new ArrayList<>();
     private final List<RemoteOperation> remoteOperationList = new ArrayList<>();
+    private final List<AnalysisOperation> analysisOperationList = new ArrayList<>();
     private String name;
 
     // -- Methods --
@@ -32,6 +34,11 @@ public class Profile {
 
     public void addRemote(RemoteOperation operation) {
         remoteOperationList.add(operation);
+    }
+    
+    public void addAnalysis(AnalysisOperation operation) 
+    {
+        analysisOperationList.add(operation);
     }
 
     // -- Getters and setters --
@@ -60,5 +67,7 @@ public class Profile {
         return remoteOperationList;
     }
     
-    
+    public List<AnalysisOperation> getAnalysisOperationList() {
+        return analysisOperationList;
+    }
 }

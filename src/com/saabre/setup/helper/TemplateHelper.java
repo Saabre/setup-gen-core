@@ -17,20 +17,24 @@ public class TemplateHelper {
     
      public static Chunk getScriptChunk(String file, String name)
     {
-        return getChunk("script", file, name);
+        return getChunk("script", file, name, "sh");
     }
     
     public static Chunk getSystemChunk(String file, String name)
     {
-        return getChunk("system", file, name);
+        return getChunk("system", file, name, "sh");
     }
     
-    public static Chunk getChunk(String path, String file, String name)
+    public static Chunk getAnalysisChunk(String file, String name) 
+    {
+        return getChunk("analysis", file, name, "Rmd");
+    }
+    
+    public static Chunk getChunk(String path, String file, String name, String ext)
     {
         Theme chunkFactory = new Theme(FileHelper.getTemplateFolder(), path);
-        chunkFactory.setDefaultFileExtension("sh");
+        chunkFactory.setDefaultFileExtension(ext);
         
         return chunkFactory.makeChunk(file + "#"+ name);
     }
-    
 }
