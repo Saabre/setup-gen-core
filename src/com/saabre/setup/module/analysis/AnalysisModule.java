@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.system.module.analysis;
+package com.saabre.setup.module.analysis;
 
 import com.saabre.setup.operation.analysis.BuildReport;
 import com.saabre.setup.system.base.Module;

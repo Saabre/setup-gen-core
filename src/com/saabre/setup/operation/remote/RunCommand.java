@@ -6,8 +6,8 @@
 
 package com.saabre.setup.operation.remote;
 
-import com.saabre.setup.system.module.remote.RemoteCommandLauncher;
-import com.saabre.setup.system.module.remote.RemoteOperation;
+import com.saabre.setup.module.remote.RemoteCommandLauncher;
+import com.saabre.setup.module.remote.RemoteOperation;
 
 /**
  *

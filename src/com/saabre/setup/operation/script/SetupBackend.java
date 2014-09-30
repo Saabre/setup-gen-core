@@ -6,7 +6,7 @@
 
 package com.saabre.setup.operation.script;
 
-import com.saabre.setup.system.module.script.ScriptOperation;
+import com.saabre.setup.module.script.ScriptOperation;
 import com.x5.template.Chunk;
 
 /**

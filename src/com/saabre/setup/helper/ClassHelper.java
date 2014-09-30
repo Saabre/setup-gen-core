@@ -6,7 +6,7 @@
 
 package com.saabre.setup.helper;
 
-import com.saabre.setup.system.module.script.ScriptOperation;
+import com.saabre.setup.module.script.ScriptOperation;
 import com.saabre.setup.system.base.Profile;
 
 /**

@@ -6,9 +6,9 @@
 
 package com.saabre.setup.system.base;
 
-import com.saabre.setup.system.module.analysis.AnalysisOperation;
-import com.saabre.setup.system.module.remote.RemoteOperation;
-import com.saabre.setup.system.module.script.ScriptOperation;
+import com.saabre.setup.module.analysis.AnalysisOperation;
+import com.saabre.setup.module.remote.RemoteOperation;
+import com.saabre.setup.module.script.ScriptOperation;
 import java.util.ArrayList;
 import java.util.List;
 

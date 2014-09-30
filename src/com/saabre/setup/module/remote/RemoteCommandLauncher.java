@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.system.module.remote;
+package com.saabre.setup.module.remote;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;

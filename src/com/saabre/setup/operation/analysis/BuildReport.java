@@ -7,8 +7,8 @@ package com.saabre.setup.operation.analysis;
 
 import com.saabre.setup.helper.FileHelper;
 import com.saabre.setup.helper.TemplateHelper;
-import com.saabre.setup.system.module.analysis.AnalysisBuilder;
-import com.saabre.setup.system.module.analysis.AnalysisOperation;
+import com.saabre.setup.module.analysis.AnalysisBuilder;
+import com.saabre.setup.module.analysis.AnalysisOperation;
 import com.x5.template.Chunk;
 
 /**

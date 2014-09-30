@@ -7,8 +7,8 @@
 package com.saabre.setup.operation.remote;
 
 import com.saabre.setup.helper.FileHelper;
-import com.saabre.setup.system.module.remote.RemoteFileSender;
-import com.saabre.setup.system.module.remote.RemoteOperation;
+import com.saabre.setup.module.remote.RemoteFileSender;
+import com.saabre.setup.module.remote.RemoteOperation;
 import java.io.File;
 import java.util.List;
 import java.util.Map;

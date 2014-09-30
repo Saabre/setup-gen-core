@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.saabre.setup.system.module.script;
+package com.saabre.setup.module.script;
 
 import com.saabre.setup.helper.FileHelper;
 import com.saabre.setup.system.base.Module;

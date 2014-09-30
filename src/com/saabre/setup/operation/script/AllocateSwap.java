@@ -8,7 +8,7 @@ package com.saabre.setup.operation.script;
 
 import com.saabre.setup.helper.FileHelper;
 import com.saabre.setup.helper.NameHelper;
-import com.saabre.setup.system.module.script.ScriptOperation;
+import com.saabre.setup.module.script.ScriptOperation;
 import com.x5.template.Chunk;
 import java.util.Map;
 
