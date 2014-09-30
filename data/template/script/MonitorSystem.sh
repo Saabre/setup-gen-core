@@ -5,69 +5,70 @@ apt-get install sysstat
 {#Main}
 # Prepare the file
 FILE="monitor.log"
-echo "" > $FILE
 {#}
 
 {#LoopStart}
 LAST_TIMESTAMP=0
 
-#while true; do
+while true; do
 
     TIMESTAMP=`date +%s`
-    if[! $LAST_TIMESTAMP -eq $TIMESTAMP]
+    if [ ! $LAST_TIMESTAMP -eq $TIMESTAMP ] 
+    then
 
-    echo "" >> $FILE
-    echo "TIME $TIMESTAMP" >> $FILE
+    echo ""
+    echo "TIME $TIMESTAMP"
 {#}
 
 {#LoopEnd}
-    
+
     fi
     LAST_TIMESTAMP=$TIMESTAMP
     sleep 0.5
-    
-#done
+
+done
 {#}
 
 {#DfCsv}
-    # Monitor remaining space
-    df -k | tr -s " " | sed 's/ /; /g' >> $FILE
+    echo "#DfCsv" # Monitor remaining space
+    df -k | tr -s " " | sed 's/ /; /g'
 {#}
 
 {#DfRaw}
-    # Monitor remaining space
-    df -k >> $FILE
+    echo "#DfRaw" # Monitor remaining space
+    df -k
 {#}
 
 {#Iostat}
     # Monitor disk usage
-    iostat -d >> $FILE
+    echo "#Iostat" 
+    iostat -d
 {#}
 
 
 {#MpstatAll}
-    # Monitor CPU usage
-    mpstat -P all >> $FILE
+    echo "#MpstatAll" # Monitor CPU usage
+    mpstat -P ALL
 {#}
 
 {#Mpstat}
-    # Monitor CPU usage
-    mpstat >> $FILE
+    echo "#Mpstat" # Monitor CPU usage
+    mpstat
 {#}
 
 
 {#Meminfo}
-    # Monitor RAM usage
-    cat /proc/meminfo >> $FILE
+    echo "#Meminfo" # Monitor RAM usage
+    cat /proc/meminfo
 {#}
 
 {#Free}
-    # Monitor RAM usage
-    free >> $FILE
+    echo "#Free" # Monitor RAM usage
+    free;
 {#}
 
 
 {#Vmstat}
-    # Monitor all usages
-    vmstat >> $FILE
+    echo "#Vmstat" # Monitor all usages
+    vmstat
 {#}
