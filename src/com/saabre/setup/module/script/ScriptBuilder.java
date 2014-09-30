@@ -9,8 +9,6 @@ package com.saabre.setup.module.script;
 import com.saabre.setup.helper.FileHelper;
 import com.saabre.setup.helper.TemplateHelper;
 import com.x5.template.Chunk;
-import java.io.PrintWriter;
-import java.util.List;
 
 /**
  *
