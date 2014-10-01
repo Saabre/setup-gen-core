@@ -40,7 +40,7 @@ public class MonitorSystem extends ScriptOperation {
         loadSimpleChunk("MpstatAll");
         
         // RAM --
-        loadSimpleChunk("Free");
+        loadSimpleChunk("Meminfo");
         
         // Disk --
         

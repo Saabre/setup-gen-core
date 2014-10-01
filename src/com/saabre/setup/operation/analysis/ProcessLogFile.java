@@ -12,12 +12,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,6 +58,7 @@ public class ProcessLogFile extends AnalysisOperation
         sectionList.add(new DfRawSection());
         sectionList.add(new IostatSection());
         sectionList.add(new MpstatAllSection());
+        sectionList.add(new MeminfoSection());
         
         // Read monitor file --
         File f = new File(FileHelper.getAnalyisOutputFolder() + "monitor.log");
@@ -154,6 +153,8 @@ public class ProcessLogFile extends AnalysisOperation
     
     private class DfRawSection extends Section {
         @Override public String getTag() { return "DfRaw"; }
+            
+        String prefix = "diskspace.";
 
         @Override
         public void onLine(String line) {
@@ -163,7 +164,6 @@ public class ProcessLogFile extends AnalysisOperation
             
             line = line.replaceAll(" {1,}", " ");
             String[] cols = line.split(" ");
-            String prefix = "diskspace.";
             String mount = "." + cols[5];
             
             store(prefix + "total" + mount, cols[1]);
@@ -174,16 +174,17 @@ public class ProcessLogFile extends AnalysisOperation
     
     private class IostatSection extends Section {
         @Override public String getTag() { return "Iostat"; }
+            
+        String prefix = "diskio.";
 
         @Override
         public void onLine(String line) {
             // Ignore Header --
-            if(line.matches("Linux.*")) 
+            if(line.matches("Linux.*") || line.matches("Device:.*")) 
                 return; 
             
             line = line.replaceAll(" {2,}", "  ");
             String[] cols = line.split("  ");
-            String prefix = "diskio.";
             String mount = "." + cols[0];
             
             store(prefix + "tps" + mount, cols[1]); // Transfer per second --
@@ -194,16 +195,17 @@ public class ProcessLogFile extends AnalysisOperation
     
     private class MpstatAllSection extends Section {
         @Override public String getTag() { return "MpstatAll"; }
+        
+        String prefix = "cpu.";
 
         @Override
         public void onLine(String line) {
             // Ignore Header --
-            if(line.matches("Linux.*")) 
+            if(line.matches("Linux.*") || line.matches(".*CPU.*")) 
                 return; 
             
             line = line.replaceAll(" {1,}", " ");
             String[] cols = line.split(" ");
-            String prefix = "cpu.";
             String mount = "." + cols[2];
             
             store(prefix + "usr"    + mount, cols[2]);
@@ -217,5 +219,29 @@ public class ProcessLogFile extends AnalysisOperation
             store(prefix + "gnice"  + mount, cols[10]);
             store(prefix + "idle"   + mount, cols[11]);
         }        
+    }
+    
+    private class MeminfoSection extends Section {
+        @Override public String getTag() { return "Meminfo"; }
+        
+        String[] cols;
+
+        @Override
+        public void onLine(String line) {
+            
+            line = line.replaceAll(" {1,}", " ");
+            cols = line.split(" ");
+            
+            getCol("MemTotal", "ram.total");
+            getCol("MemFree", "ram.total");
+            getCol("SwapTotal", "swap.total");
+            getCol("SwapFree", "swap.total");
+        }
+        
+        private void getCol(String title, String id)
+        {
+            if(cols[0].equals(title + ":"))
+                store(id, cols[1]);
+        }
     }
 }

@@ -38,8 +38,7 @@ done
 {#}
 
 {#Iostat}
-    # Monitor disk usage
-    echo "#Iostat" 
+    echo "#Iostat" # Monitor disk usage
     iostat -d
 {#}
 
@@ -57,7 +56,7 @@ done
 
 {#Meminfo}
     echo "#Meminfo" # Monitor RAM usage
-    cat /proc/meminfo
+    egrep 'Mem|Cache|Swap' /proc/meminfo
 {#}
 
 {#Free}
