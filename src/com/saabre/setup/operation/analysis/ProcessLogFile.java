@@ -58,6 +58,7 @@ public class ProcessLogFile extends AnalysisOperation
         // Load section classes --
         
         sectionList.add(new DfRawSection());
+        sectionList.add(new IostatSection());
         
         // Read monitor file --
         File f = new File(FileHelper.getAnalyisOutputFolder() + "monitor.log");
@@ -161,7 +162,7 @@ public class ProcessLogFile extends AnalysisOperation
             
             line = line.replaceAll(" {1,}", " ");
             String[] cols = line.split(" ");
-            String prefix = "disk.";
+            String prefix = "diskspace.";
             String mount = cols[5];
             
             store(prefix + "total." + mount, cols[1]);
@@ -170,7 +171,23 @@ public class ProcessLogFile extends AnalysisOperation
         }        
     }
     
-    
+    private class IostatSection extends Section {
+        @Override public String getTag() { return "Iostat"; }
 
-    
+        @Override
+        public void onLine(String line) {
+            // Ignore Header --
+            if(line.matches("Linux.*")) 
+                return; 
+            
+            line = line.replaceAll(" {2,}", "  ");
+            String[] cols = line.split("  ");
+            String prefix = "diskio.";
+            String mount = cols[0];
+            
+            store(prefix + "tps." + mount, cols[1]); // Transfer per second --
+            store(prefix + "read."  + mount, cols[2]); // Block read per second --
+            store(prefix + "write."  + mount, cols[3]); // Block written per second --
+        }        
+    }
 }
