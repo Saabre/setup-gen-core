@@ -59,6 +59,7 @@ public class ProcessLogFile extends AnalysisOperation
         
         sectionList.add(new DfRawSection());
         sectionList.add(new IostatSection());
+        sectionList.add(new MpstatAllSection());
         
         // Read monitor file --
         File f = new File(FileHelper.getAnalyisOutputFolder() + "monitor.log");
@@ -163,11 +164,11 @@ public class ProcessLogFile extends AnalysisOperation
             line = line.replaceAll(" {1,}", " ");
             String[] cols = line.split(" ");
             String prefix = "diskspace.";
-            String mount = cols[5];
+            String mount = "." + cols[5];
             
-            store(prefix + "total." + mount, cols[1]);
-            store(prefix + "used."  + mount, cols[2]);
-            store(prefix + "free."  + mount, cols[3]);
+            store(prefix + "total" + mount, cols[1]);
+            store(prefix + "used"  + mount, cols[2]);
+            store(prefix + "free"  + mount, cols[3]);
         }        
     }
     
@@ -183,11 +184,38 @@ public class ProcessLogFile extends AnalysisOperation
             line = line.replaceAll(" {2,}", "  ");
             String[] cols = line.split("  ");
             String prefix = "diskio.";
-            String mount = cols[0];
+            String mount = "." + cols[0];
             
-            store(prefix + "tps." + mount, cols[1]); // Transfer per second --
-            store(prefix + "read."  + mount, cols[2]); // Block read per second --
-            store(prefix + "write."  + mount, cols[3]); // Block written per second --
+            store(prefix + "tps" + mount, cols[1]); // Transfer per second --
+            store(prefix + "read"  + mount, cols[2]); // Block read per second --
+            store(prefix + "write"  + mount, cols[3]); // Block written per second --
+        }        
+    }
+    
+    private class MpstatAllSection extends Section {
+        @Override public String getTag() { return "MpstatAll"; }
+
+        @Override
+        public void onLine(String line) {
+            // Ignore Header --
+            if(line.matches("Linux.*")) 
+                return; 
+            
+            line = line.replaceAll(" {1,}", " ");
+            String[] cols = line.split(" ");
+            String prefix = "cpu.";
+            String mount = "." + cols[2];
+            
+            store(prefix + "usr"    + mount, cols[2]);
+            store(prefix + "nice"   + mount, cols[3]);
+            store(prefix + "sys"    + mount, cols[4]);
+            store(prefix + "iowait" + mount, cols[5]);
+            store(prefix + "irq"    + mount, cols[6]);
+            store(prefix + "soft"   + mount, cols[7]);
+            store(prefix + "steal"  + mount, cols[8]);
+            store(prefix + "guest"  + mount, cols[9]);
+            store(prefix + "gnice"  + mount, cols[10]);
+            store(prefix + "idle"   + mount, cols[11]);
         }        
     }
 }
