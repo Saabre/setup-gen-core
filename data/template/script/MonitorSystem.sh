@@ -3,8 +3,6 @@ apt-get install sysstat
 {#}
 
 {#Main}
-# Prepare the file
-FILE="monitor.log"
 {#}
 
 {#LoopStart}
@@ -17,7 +15,7 @@ while true; do
     then
 
     echo ""
-    echo "TIME $TIMESTAMP"
+    echo "#TIME $TIMESTAMP"
 {#}
 
 {#LoopEnd}
