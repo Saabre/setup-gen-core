@@ -8,6 +8,7 @@ package com.saabre.setup.helper;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Map;
@@ -80,10 +81,15 @@ public class FileHelper {
     
     public static void write(String path, String str) throws Exception 
     {
-        PrintWriter writer = new PrintWriter(path, "UTF-8");
+        write(path, str, "UTF-8");
+    }
+
+    public static void write(String path, String str, String encoding) throws Exception {
+        PrintWriter writer = new PrintWriter(path, encoding);
         writer.print(str);
         writer.close();
     }
+    
     
     /* From http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java */
     public static String byteCountToReadable(long size, boolean si)

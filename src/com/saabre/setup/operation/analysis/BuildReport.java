@@ -43,10 +43,11 @@ public class BuildReport extends AnalysisOperation
         
         stringBuilder.append(chunk.toString());
         
-        chunk = getChunk("Cpu");
-        stringBuilder.append(chunk.toString());
+        stringBuilder.append(getChunk("Cpu").toString());
+        stringBuilder.append(getChunk("Data").toString());
+        stringBuilder.append(getChunk("Ram").toString());
         
-        FileHelper.write(FileHelper.getAnalyisOutputFolder() + "Report.Rmd", stringBuilder.toString());
+        FileHelper.write(FileHelper.getAnalyisOutputFolder() + "Report.Rmd", stringBuilder.toString(), "ISO-8859-1");
         
         // Generate report file --
         AnalysisBuilder builder = new AnalysisBuilder();
