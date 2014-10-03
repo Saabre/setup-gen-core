@@ -1,27 +1,45 @@
 {#Main}
 ---
-title: "Test 1"
+title: "Rapport de performances"
 author: "Elouan"
-date: "Monday, September 22, 2014"
+date: "{$date}"
 output:
   html_document:
     theme: spacelab
   pdf_document: default
 ---
+{#}
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+{#Cpu}
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+### Graphe de performances processeur
 
-```{r}
-summary(cars)
+```{r, echo=FALSE} 
+
+library('reshape2')
+library('ggplot2')
+
+# ---- CPU -----
+
+cpu = read.csv(file="cpu.csv",head=TRUE,sep=";")
+
+initialTimestamp <- cpu[1, "time"]
+time = cpu[["time"]] - initialTimestamp
+
+cols = c("usr.all",
+         "nice.all",
+         "sys.all",
+         "iowait.all",
+         "irq.all",
+         "soft.all",
+         "steal.all",
+         "guest.all",
+         "gnice.all")
+            
+cpuAll = data.frame(time, cpu[,cols])
+cpuAll = melt(cpuAll, id.vars="time")
+
+ggplot(cpuAll, aes(time, value)) + geom_line(aes(colour=variable))
+
 ```
-
-You can also embed plots, for example:
-
-```{r, echo=FALSE}
-plot(cars)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 {#}

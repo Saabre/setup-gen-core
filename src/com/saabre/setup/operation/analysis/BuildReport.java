@@ -10,6 +10,10 @@ import com.saabre.setup.helper.TemplateHelper;
 import com.saabre.setup.module.analysis.AnalysisBuilder;
 import com.saabre.setup.module.analysis.AnalysisOperation;
 import com.x5.template.Chunk;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -28,8 +32,21 @@ public class BuildReport extends AnalysisOperation
     public void run() throws Exception 
     {
         // Generate report template --
-        Chunk chunk = getChunk("Main");
-        FileHelper.write(FileHelper.getAnalyisOutputFolder() + "Report.Rmd", chunk.toString());
+        StringBuilder stringBuilder = new StringBuilder();
+        Chunk chunk;
+        
+        chunk = getChunk("Main");
+        
+        DateFormat df = DateFormat.getDateTimeInstance();
+        Date today = Calendar.getInstance().getTime(); 
+        chunk.set("date", df.format(today));
+        
+        stringBuilder.append(chunk.toString());
+        
+        chunk = getChunk("Cpu");
+        stringBuilder.append(chunk.toString());
+        
+        FileHelper.write(FileHelper.getAnalyisOutputFolder() + "Report.Rmd", stringBuilder.toString());
         
         // Generate report file --
         AnalysisBuilder builder = new AnalysisBuilder();

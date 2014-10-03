@@ -37,7 +37,7 @@ public class MonitorSystem extends ScriptOperation {
         loadSimpleChunk("Iostat");
         
         // CPU --
-        loadSimpleChunk("MpstatAll");
+        // loadSimpleChunk("MpstatAll");
         
         // RAM --
         loadSimpleChunk("Meminfo");

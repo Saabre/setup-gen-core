@@ -53,6 +53,11 @@ done
     mpstat
 {#}
 
+{#TopGrep}
+    echo "#Top" # Monitor CPU usage
+    top -bn 2 -d 0.01 | grep '^%Cpu' | tail -n 1
+{#}
+
 
 {#Meminfo}
     echo "#Meminfo" # Monitor RAM usage
