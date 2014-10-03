@@ -233,9 +233,9 @@ public class ProcessLogFile extends AnalysisOperation
             cols = line.split(" ");
             
             getCol("MemTotal", "ram.total");
-            getCol("MemFree", "ram.total");
+            getCol("MemFree", "ram.free");
             getCol("SwapTotal", "swap.total");
-            getCol("SwapFree", "swap.total");
+            getCol("SwapFree", "swap.free");
         }
         
         private void getCol(String title, String id)
