@@ -8,17 +8,26 @@ output:
     theme: spacelab
   pdf_document: default
 ---
+
+```{r, echo=FALSE} 
+library('reshape2')
+library('ggplot2')
+```
+
+{#}
+
+{#Data}
+```{r, echo=FALSE} 
+# ---- DATA -----
+data = read.csv(file="monitor.csv",head=TRUE,sep=";")
+```
 {#}
 
 {#Cpu}
 
-### Graphe de performances processeur
+#### Graphe de performances processeur
 
 ```{r, echo=FALSE} 
-
-library('reshape2')
-library('ggplot2')
-
 # ---- CPU -----
 
 cpu = read.csv(file="cpu.csv",head=TRUE,sep=";")
@@ -43,3 +52,69 @@ ggplot(cpuAll, aes(time, value)) + geom_line(aes(colour=variable))
 
 ```
 {#}
+
+{#Ram}
+
+#### Graphe de mémoire vive et d'échange utilisée
+
+```{r, echo=FALSE} 
+
+# ---- RAM -----
+
+# Compute timestamp --
+initialTimestamp <- data[1, "time"]
+time = data[["time"]] - initialTimestamp
+
+# Choose columns --
+cols = c("ram.total","ram.free", "swap.total", "swap.free")
+ram = data.frame(time, data[,cols])
+
+# Compute Ram and Swap used --
+ramUsed = (ram[["ram.total"]] - ram[["ram.free"]]) / 1000
+swapUsed = (ram[["swap.total"]] - ram[["swap.free"]]) / 1000
+max = (ram[1, "ram.total"] + ram[1, "swap.total"]) / 1000
+min = 0
+ramGraph = data.frame(time, ramUsed, swapUsed)
+
+# Display -- 
+ramGraph = melt(ramGraph, id.vars="time")
+ggplot(ramGraph, aes(time, value, fill=variable)) + 
+  geom_line(aes(colour=variable)) +
+  ylim(c(min, max)) + 
+  geom_area(position = 'stack')
+
+```
+{#}
+
+{#Diskspace}
+
+#### Graphe de d'espace disque utilisé
+
+```{r, echo=FALSE} 
+
+# ---- DISKSPACE -----
+
+# Compute timestamp --
+initialTimestamp <- data[1, "time"]
+time = data[["time"]] - initialTimestamp
+
+# Choose columns --
+cols = c("diskspace.total..","diskspace.used..", "diskspace.free..")
+diskspace = data.frame(data[,cols])
+
+# Compute Diskspace used --
+diskspace = diskspace / 1000000
+max = diskspace[1, "diskspace.total.."]
+min = 0
+diskspaceGraph = data.frame(time, diskspace[["diskspace.used.."]])
+
+# Display -- 
+diskspaceGraph = melt(diskspaceGraph, id.vars="time")
+ggplot(diskspaceGraph, aes(time, value, fill=variable)) + 
+  geom_line(aes(colour=variable)) +
+  ylim(c(min, max)) + 
+  geom_area(position = 'stack')
+
+```
+{#}
+

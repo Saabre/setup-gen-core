@@ -46,6 +46,7 @@ public class BuildReport extends AnalysisOperation
         stringBuilder.append(getChunk("Cpu").toString());
         stringBuilder.append(getChunk("Data").toString());
         stringBuilder.append(getChunk("Ram").toString());
+        stringBuilder.append(getChunk("Diskspace").toString());
         
         FileHelper.write(FileHelper.getAnalyisOutputFolder() + "Report.Rmd", stringBuilder.toString(), "ISO-8859-1");
         
