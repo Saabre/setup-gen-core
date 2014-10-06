@@ -11,7 +11,6 @@ import com.saabre.setup.module.analysis.AnalysisBuilder;
 import com.saabre.setup.module.analysis.AnalysisOperation;
 import com.x5.template.Chunk;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -47,6 +46,7 @@ public class BuildReport extends AnalysisOperation
         stringBuilder.append(getChunk("Data").toString());
         stringBuilder.append(getChunk("Ram").toString());
         stringBuilder.append(getChunk("Diskspace").toString());
+        stringBuilder.append(getChunk("Diskio").toString());
         
         FileHelper.write(FileHelper.getAnalyisOutputFolder() + "Report.Rmd", stringBuilder.toString(), "ISO-8859-1");
         

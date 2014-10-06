@@ -1,5 +1,5 @@
 {#Install}
-apt-get install sysstat
+apt-get install sysstata dstat
 {#}
 
 {#Main}

@@ -34,7 +34,7 @@ public class MonitorSystem extends ScriptOperation {
         
         // Disk --
         loadSimpleChunk("DfRaw");
-        loadSimpleChunk("Iostat");
+        //loadSimpleChunk("Iostat");
         
         // CPU --
         // loadSimpleChunk("MpstatAll");

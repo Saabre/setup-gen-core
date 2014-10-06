@@ -25,7 +25,7 @@ data = read.csv(file="monitor.csv",head=TRUE,sep=";")
 
 {#Cpu}
 
-#### Graphe de performances processeur
+#### Performances processeur
 
 ```{r, echo=FALSE} 
 # ---- CPU -----
@@ -55,7 +55,7 @@ ggplot(cpuAll, aes(time, value)) + geom_line(aes(colour=variable))
 
 {#Ram}
 
-#### Graphe de mémoire vive et d'échange utilisée
+#### Mémoire vive et mémoire d'échange utilisée
 
 ```{r, echo=FALSE} 
 
@@ -88,7 +88,7 @@ ggplot(ramGraph, aes(time, value, fill=variable)) +
 
 {#Diskspace}
 
-#### Graphe de d'espace disque utilisé
+#### Espace disque utilisé
 
 ```{r, echo=FALSE} 
 
@@ -118,3 +118,28 @@ ggplot(diskspaceGraph, aes(time, value, fill=variable)) +
 ```
 {#}
 
+
+{#Diskio}
+
+#### Lecture/écriture
+
+```{r, echo=FALSE} 
+# ---- Diskio -----
+
+diskio = read.csv(file="diskio.csv",head=TRUE,sep=";")
+
+initialTimestamp <- diskio[1, "time"]
+time = diskio[["time"]] - initialTimestamp
+
+cols = c("read",
+         "write")
+            
+diskioGraph = data.frame(time, diskio[,cols])
+diskioGraph = diskioGraph / 1000000
+
+diskioGraph = melt(diskioGraph, id.vars="time")
+
+ggplot(diskioGraph, aes(time, value)) + geom_line(aes(colour=variable))
+
+```
+{#}

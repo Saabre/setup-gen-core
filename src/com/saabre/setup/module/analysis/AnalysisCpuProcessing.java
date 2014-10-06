@@ -5,12 +5,10 @@
  */
 package com.saabre.setup.module.analysis;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 /**
  *
@@ -21,6 +19,8 @@ public class AnalysisCpuProcessing extends AnalysisProcessing
     // -- Attributes --
     
     private String prefix;
+    private final Calendar base;
+    private final Calendar calendar;
     
     // -- Constructors --
     
@@ -28,6 +28,9 @@ public class AnalysisCpuProcessing extends AnalysisProcessing
     {
         prefix = "";
         currentTimestamp = 0;
+        
+        base = GregorianCalendar.getInstance();
+        calendar = GregorianCalendar.getInstance();
     }
 
     // -- Methods --
@@ -47,8 +50,6 @@ public class AnalysisCpuProcessing extends AnalysisProcessing
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ssaa");
         Date date = sdf.parse(cols[0]+cols[1]);
         
-        Calendar base = GregorianCalendar.getInstance();
-        Calendar calendar = GregorianCalendar.getInstance();
         
         calendar.setTime(date);
         calendar.set(base.get(Calendar.YEAR), base.get(Calendar.MONTH), base.get(Calendar.DATE));

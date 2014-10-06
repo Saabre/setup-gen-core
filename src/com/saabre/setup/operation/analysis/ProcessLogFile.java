@@ -7,6 +7,7 @@ package com.saabre.setup.operation.analysis;
 
 import com.saabre.setup.helper.FileHelper;
 import com.saabre.setup.module.analysis.AnalysisCpuProcessing;
+import com.saabre.setup.module.analysis.AnalysisDiskioProcessing;
 import com.saabre.setup.module.analysis.AnalysisMainProcessing;
 import com.saabre.setup.module.analysis.AnalysisOperation;
 
@@ -37,6 +38,11 @@ public class ProcessLogFile extends AnalysisOperation
         
         cpu.readFile(FileHelper.getAnalyisOutputFolder() + "cpu.log");        
         cpu.printFile(FileHelper.getAnalyisOutputFolder() + "cpu.csv");
+        
+        AnalysisDiskioProcessing diskio = new AnalysisDiskioProcessing();
+        
+        diskio.readFile(FileHelper.getAnalyisOutputFolder() + "diskio.log");        
+        diskio.printFile(FileHelper.getAnalyisOutputFolder() + "diskio.csv");
     }
 
     private void processLine(String line) 
