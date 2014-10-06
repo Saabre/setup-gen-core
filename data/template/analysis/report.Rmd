@@ -48,7 +48,9 @@ cols = c("usr.all",
 cpuAll = data.frame(time, cpu[,cols])
 cpuAll = melt(cpuAll, id.vars="time")
 
-ggplot(cpuAll, aes(time, value)) + geom_line(aes(colour=variable))
+ggplot(cpuAll, aes(time, value, fill=variable)) + 
+  geom_line(aes(colour=variable)) + 
+  geom_area(position = 'stack')
 
 ```
 {#}
@@ -134,9 +136,9 @@ time = diskio[["time"]] - initialTimestamp
 cols = c("read",
          "write")
             
-diskioGraph = data.frame(time, diskio[,cols])
+diskioGraph = data.frame(diskio[,cols])
 diskioGraph = diskioGraph / 1000000
-
+diskioGraph = data.frame(time, diskioGraph)
 diskioGraph = melt(diskioGraph, id.vars="time")
 
 ggplot(diskioGraph, aes(time, value)) + geom_line(aes(colour=variable))

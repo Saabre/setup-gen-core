@@ -8,6 +8,8 @@ package com.saabre.setup.operation.script;
 
 import com.saabre.setup.module.script.ScriptOperation;
 import com.x5.template.Chunk;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -15,26 +17,46 @@ import com.x5.template.Chunk;
  */
 public class SetupBackend extends ScriptOperation {
 
+    private String source;
+    private String path;
+    private List<String> stepList;
+    
     @Override
     public void loadConfig() throws Exception 
     { 
+        Map<String, Object> config = (Map<String, Object>) this.config;
         
+        path = "/opt/" + "osrm-backend" + "/";
+        source = (String) config.get("source");
+        
+        if(source == null)
+            throw new Exception("No source defined");
+        
+        stepList = (List<String>) config.get("step");
     }
     
     @Override
     public void run() 
     {
-        Chunk html = getChunk("Main");
-        
-        String path = "/mnt/";
-        String fileName = path + "swap1.2g";
+        for(String step : stepList)
+        {
+            if(step.equals("Extract") || step.equals("Prepare"))
+            {
+                addChunk("BindData");
+            }
+            
+            addChunk(step);
+        }
+    }
+    
+    private void addChunk(String name)
+    {
+        Chunk chunk = getChunk(name);
+       
+        chunk.set("path", path);
+        chunk.set("source", source);
 
-        html.set("path", path);
-        html.set("fileName", fileName);
-        html.set("base", 1024);
-        html.set("clusterNb", 2097152);
-
-        builder.append(html.toString());
+        builder.append(chunk.toString());
     }
     
 }
