@@ -1,5 +1,5 @@
 
-# Les profils à générer --
+# Les modules à lancer --
 modules:
   - script
   - remote
@@ -8,5 +8,14 @@ modules:
 # Les profils à générer --
 profiles:
 # - default
-  - fullSetup
-  - dummy
+# - dummy
+# - sendScript
+# - monitor
+
+# - allocate
+# - recompile
+# - compile
+# - fullSetup
+# - update
+
+  - monitorEnd

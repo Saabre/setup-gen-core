@@ -1,0 +1,14 @@
+
+script:
+# Monitor everything
+  - type: MonitorSystem
+    config: { }
+    
+remote:  
+  - {type: RunCommand, config: "/opt/script/monitor.sh > /opt/script/monitor.log &"}
+  - {type: RunCommand, config: "mpstat -P ALL 1 > /opt/script/cpu.log &"}
+  
+  - {type: RunCommand, config: "rm -f /opt/script/diskio.log"}
+  - {type: RunCommand, config: "dstat -dt --output /opt/script/diskio.log 1 > /dev/null &"}
+  
+  - {type: RunCommand, config: "sleep 2"}

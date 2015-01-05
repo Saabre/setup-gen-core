@@ -1,0 +1,15 @@
+
+script:
+# Allouer plus de Swap
+# - type: AllocateSwap
+#   config: { amount: 2Gio }
+    
+# Installer l'API OSRM
+  - type: SetupBackend
+    config:
+      source: alsace-latest
+      step:
+        - Recompile           
+    
+remote:
+  - {type: RunCommand, config: "/opt/script/recompile.sh"}

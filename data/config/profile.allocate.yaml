@@ -1,0 +1,7 @@
+
+script:
+  - type: AllocateSwap
+    config: { amount: 2Gio }         
+    
+remote:
+  - {type: RunCommand, config: "/opt/script/allocate.sh"}

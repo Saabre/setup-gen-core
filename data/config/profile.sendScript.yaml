@@ -1,0 +1,9 @@
+    
+remote:
+# Envoyer le fichier
+  - type: SendFile
+    config:
+      source: [ "data://output/script/" ]
+      target: /opt/script
+      
+  - {type: RunCommand, config: "chmod +x /opt/script/*"}

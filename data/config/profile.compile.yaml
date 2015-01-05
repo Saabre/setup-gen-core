@@ -1,0 +1,16 @@
+
+script:
+# Allouer plus de Swap
+# - type: AllocateSwap
+#   config: { amount: 2Gio }
+    
+# Installer l'API OSRM
+  - type: SetupBackend
+    config:
+      source: alsace-latest
+      step:
+        - ClearBuild
+        - Compile           
+    
+remote:
+  - {type: RunCommand, config: "/opt/script/compile.sh"}

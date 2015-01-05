@@ -1,0 +1,22 @@
+
+remote:
+  - {type: RunCommand, config: "sleep 2"}
+  
+  - {type: RunCommand, config: "kill `pgrep monitor.sh`"}
+  - {type: RunCommand, config: "kill -SIGKILL `pgrep mpstat`"}
+  - {type: RunCommand, config: "kill `pgrep dstat`"}
+  
+  - type: GetFile
+    config: 
+        source: 
+          - /opt/script/monitor.log
+          - /opt/script/cpu.log
+          - /opt/script/diskio.log
+        target: log://
+        
+analysis:
+# Générer le rapport
+  - type: ProcessLogFile
+    config: {}
+  - type: BuildReport
+    config: {}

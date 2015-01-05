@@ -8,8 +8,19 @@
     mkdir -p build; cd build; cmake ..; make
 {#}
 
+{#Recompile}
+    cd /opt/osrm-backend/build
+    make
+{#}
+
 {#ClearBuild}
-    rm -rf /opt/osrm-backend/build
+    cd /opt/osrm-backend/build
+    rm -f *.a
+    rm -rf c*
+    rm -rf C*
+    rm -f l*
+    rm Makefile
+    rm -f stxxl*
 {#}
 
 {#BindData}
@@ -24,5 +35,9 @@
 
 {#Prepare}
     /opt/osrm-backend/build/osrm-prepare map.osm.pbf
+{#}
+
+{#Run}
+    /opt/osrm-backend/build/osrm-routed
 {#}
 

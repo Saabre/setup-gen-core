@@ -1,0 +1,11 @@
+
+script:
+  - type: SetupBackend
+    config:
+      source: alsace-latest
+      step:
+        - Extract
+        - Prepare
+           
+remote:
+  - {type: RunCommand, config: "/opt/script/update.sh"}
