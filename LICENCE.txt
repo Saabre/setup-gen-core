@@ -1,5 +1,3 @@
-/*
-
 The MIT License (MIT)
 
 Copyright (c) 2015 Saabre
@@ -21,28 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
- */
-
-package com.saabre.setup.helper;
-
-public class ClassHelper {
-    
-    public static Object newInstance(String className) throws Exception
-    {
-        // -- Load the class --
-        ClassLoader classLoader = ClassHelper.class.getClassLoader();
-        Class aClass;
-        Object obj;
-        
-        try {
-            aClass = classLoader.loadClass(className);
-            obj = aClass.newInstance();
-        } catch (ClassNotFoundException e) {
-            throw new Exception("class "+ className + " not found");
-        }
-        
-        return obj;
-    }
-    
-}
