@@ -1,0 +1,9 @@
+
+# Serveur à contacter --
+remote:
+    host: ***.***.***.***
+    port: 22
+    user: root
+    pass: ********
+    path: /opt/script
+    
